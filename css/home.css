@@ -1,0 +1,109 @@
+h1
+{
+    font-size: 60px;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
+h2
+{
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
+.produtos, .brands
+{
+    height: 400px;
+}
+
+.img-logo
+{   
+    filter: invert(80%);
+    width: 155px;
+}
+
+.botao-header 
+{
+    display: inline-block;
+    background-color: #333;
+    color: #f2f2f2;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+  
+.botao-header:hover
+{
+    background-color: #444;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.produtos
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.produtos div
+{
+    float:left;
+    max-width: 300px;
+    max-height: 350px;
+    text-align: center;
+    
+    box-shadow: 10px 10px 8px #888888;
+
+    border: black solid 2px;
+    border-radius: 10px;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.produtos div:hover
+{
+    background-color: #999;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);    
+}
+
+.produtos h3
+{
+    text-align: center;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;   
+}
+
+.produtos img
+{
+    width: 200px;
+}
+
+.produtos p, .marcas p
+{
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    padding: 20px;
+}
+
+.marcas p
+{
+    text-align: justify;
+    margin: 0 0 10px;
+}
+
+.marcas img
+{
+    width: 200px;
+    filter: invert(20%);
+}
