@@ -1,0 +1,81 @@
+/* Style for the Sign In form */
+
+#signin
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* black semi-transparent background */
+    z-index: 9999; /* make sure it appears on top of other elements */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+  
+#signin form
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    padding: 30px;
+    background-color: #fff; /* white background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* gray box-shadow */
+}
+  
+#signin input[type="text"],
+#signin input[type="password"],
+#signin input[type="date"],
+#signin input[type="submit"]
+{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+#signin input[type="text"],
+#signin input[type="password"],
+#signin input[type="date"]
+{
+    background-color: white;
+    color: #333;
+}
+
+#signin input[type="submit"]
+{
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+#signin.show
+{
+    display: block;
+    opacity: 1;
+}
+
+#close-btn
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    color: #999;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+  
+#close-btn:hover
+{
+    color: #000;
+}

@@ -1,0 +1,74 @@
+/* Style for the Log In form */
+
+.img-logo
+{
+    width: 600px;
+}
+
+#login
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-60%, -70%);
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+  
+#email, #password
+{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+  
+#button-login, #button-createacc
+{
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+#button-login
+{
+    background-color: #333;
+    color: white;
+}
+
+#button-createacc
+{
+    background-color: #fff;
+    color: #333;
+
+    border: 1px solid;
+    border-radius: 10px;
+}
+  
+#button-login:hover, #button-createacc:hover
+{
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+#button-login:hover, #signin input[type="submit"]:hover
+{
+    background-color: #444;
+}
+  
+#button-createacc:hover
+{
+    background-color: #eee;
+}

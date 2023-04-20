@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Pixels&family=Sedgwick+Ave+Display&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/signin.css">
+
+        <script src="js/login.js"></script>
+
+        <title>Login/Signin</title>
+    </head>
+</head>
+
+<body>
+
+    <img class="img-logo"  src="img/Logo.jpg">
+
+    <div id="login"> 
+        <form method="GET" action="/login">
+          <input type="email" name="email" id="email" placeholder="Email" autocomplete="email"> 
+      
+          <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password">
+      
+          <input type="submit" id="button-login" value="Log In"> 
+        </form>
+      
+        <button onclick="showSignIn()" id="button-createacc">Create New Account</button>
+    </div>      
+
+    <div id="signin">
+
+        <button id="close-btn" onclick="hideSignIn()">X</button>
+
+        <form method="POST" action="/signin">
+            <input type="text" name="firstname" id="firstname" placeholder="First name"> <br>
+            <input type="text" name="lastname" id="lastname" placeholder="Last name"> <br>
+            <input type="password" name="new-password" id="new-password" placeholder="New Password"> <br> <br>
+
+            <label for="birthday"> Birthday: </label>
+            <input type="date" name="teste" id="birthday" value="Birthday"> <br>
+
+            <input type="submit" id="button-signin" value="Sign In">
+        </form>
+
+    </div>
+
+</body>
+
+</html>
