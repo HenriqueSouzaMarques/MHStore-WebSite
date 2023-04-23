@@ -1,0 +1,13 @@
+.img-logo
+{   
+    float:inline-start;
+    filter: invert(80%);
+    width: 155px;
+}
+header h1
+{
+    float:inline-start;
+    font-size: 60px;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;
+}
