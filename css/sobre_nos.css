@@ -1,0 +1,12 @@
+.texts h2{
+    font-size: 45px;
+    margin-left: 12%;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
+.texts p{
+    text-indent: 8%;
+    margin-left: 20px;
+    font-size: large;
+}
