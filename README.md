@@ -47,11 +47,11 @@ O restante das telas necessárias para nossa aplicação, "Carrinho", "Administr
 
 ### Comentarios Sobre o Código
 
-* [Estilo das Telas](css): para facilitar o reuso de código, o arquivo ["style.css"](css/style.css) foi criado contendo o estilo dos elementos compartilhados, praticamente, por todas as telas da nossa aplicação, como o body, o header e o footer. Além disso, um ou mais arquivos ".css" adicionais foram empregados para a estilização específica das telas, complementando aquela trazida pelo arquivo "style.css". Como exemplo, a tela "Login/Signin" conta com os arquivos ["login.css"](css/login.css) e ["signin.css"](css/signin.css) para estilização completa da página.
+* [Estilo das Telas](css): para facilitar o reuso de código, o arquivo [style.css](css/style.css) foi criado contendo o estilo dos elementos compartilhados, praticamente, por todas as telas da nossa aplicação, como o body, o header e o footer. Além disso, um ou mais arquivos ".css" adicionais foram empregados para a estilização específica das telas, complementando aquela trazida pelo arquivo "style.css". Como exemplo, a tela "Login/Signin" conta com os arquivos [login.css](css/login.css) e [signin.css](css/signin.css) para estilização completa da página.
 
 ### Plano de Testes
 
-Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta ["Insomnia"](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor
+Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta [Insomnia](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor
 
 ### Resultado dos Testes
 ### Como rodar?
