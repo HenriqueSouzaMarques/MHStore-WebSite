@@ -17,21 +17,21 @@ O sistema deve ter 2 tipos de usuários: Clientes e Administradores.
 
 Conforme descrito em "Requisitos", dois tipos de usuários poderão fazer uso da aplicação WEB: clientes e administradores. Sendo assim, a forma com a qual o usuário interage com as telas será diferente de acordo com o tipo de usuário. Por exemplo, ao se acessar a tela "Produtos" (falaremos dela mais a frente) como cliente, será possível navegar pelos produtos, inspecionando-os e adicionando-os no carrinho caso desejado. Por outro lado, ao acessar a tela "Produtos" como administrador, outros recursos estarão disponíveis, como a alteração de catálogo, alteração de detalhes dos produtos, e assim por diante. A Figura a seguir resume nossa aplicação e as diferentes maneiras com as quais será possível interagir com as telas:
 
-![fluxograma](screenshots/fluxograma.png)
+![fluxograma](Mockup/fluxograma.png)
 
 Seguindo a ideia geral do fluxograma, as telas "Home-Page", "Login/Signin", "Sobre Nos" e "Produtos" foram projetadas através de HTML5/CSS3:
 
 * [Home-Page](index.html): tela inicial da nossa aplicação. Contém uma barra de navegação interativa capaz de realizar redirecionamentos para todas as telas existentes (exceto "Administrador" e "Estoque", as quais são exclusivas para administradores), uma seção Produtos, a qual apresenta as informações gerais dos tipos de produtos oferecidos pela loja, permitindo redirecionamento às partes específicas da tela "Produtos" correspondentes a cada tipo de produto, e uma seçao Marcas, contendo informações geriais sobre as marcas oferecidas pela nossa loja. A seguir, screenshot da situação atual da tela em questão:
 
-![home-page](screenshots/home.png)
+![home-page](Mockup/home.png)
 
 * [Login/Signin](login.html): tela minimalista que contém o necessário para o usuário realizar a operação de login e signin na aplicação, sendo a única página, até o momento, que contém código JavaScript. Inicialmente, o usuário se depara com os campos necessários para o login (email e senha), um botão para realizar o login e outro para cadastrar um novo usuário, conforme a screenshot a seguir:
 
-![login1](screenshots/login1.png)
+![login1](Mockup/login1.png)
 
 Ao se clicar no botão "Create New Account", uma nova tela surge "acima" da tela anterior, contendo os campos necessários para o signin (nome, email, endereço, telefone, data de nascimento e senha) e um botão de submissão, conforme a screenshot a seguir:
 
-![login2](screenshots/login2.png)
+![login2](Mockup/login2.png)
 
 * [Sobre Nos](sobre-nos.html):
 
