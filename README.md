@@ -15,7 +15,7 @@ O sistema deve ter 2 tipos de usuários: Clientes e Administradores.
 
 ### Descricao do Projeto
 
-Conforme descrito em "Requisitos", dois tipos de usuários poderão fazer uso da aplicação WEB: clientes e administradores. Sendo assim, a forma com a qual o usuário interage com as telas será diferente de acordo com o tipo de usuário. Por exemplo, ao se acessar a tela "Produtos" (falaremos dela mais a frente) como cliente, será possível navegar pelos produtos, inspecionando-os e adicionando-os no carrinho caso desejado. Por outro lado, ao acessar a tela "Produtos" como administrador, outros recursos estarão disponíveis, como a alteração de catálogo, alteração de detalhes dos produtos, e assim por diante. A Figura a seguir resume nossa aplicação e as diferentes maneiras com as quais será possível interagir com as mesmas:
+Conforme descrito em "Requisitos", dois tipos de usuários poderão fazer uso da aplicação WEB: clientes e administradores. Sendo assim, a forma com a qual o usuário interage com as telas será diferente de acordo com o tipo de usuário. Por exemplo, ao se acessar a tela "Produtos" (falaremos dela mais a frente) como cliente, será possível navegar pelos produtos, inspecionando-os e adicionando-os no carrinho caso desejado. Por outro lado, ao acessar a tela "Produtos" como administrador, outros recursos estarão disponíveis, como a alteração de catálogo, alteração de detalhes dos produtos, e assim por diante. A Figura a seguir resume nossa aplicação e as diferentes maneiras com as quais será possível interagir com as telas:
 
 ![fluxograma](screenshots/fluxograma.png)
 
@@ -45,9 +45,14 @@ O restante das telas necessárias para nossa aplicação, "Carrinho", "Administr
 
 * Estoque: 
 
-
 ### Comentarios Sobre o Código
+
+* [Estilo das Telas](css): para facilitar o reuso de código, o arquivo ["style.css"](css/style.css) foi criado contendo o estilo dos elementos compartilhados, praticamente, por todas as telas da nossa aplicação, como o body, o header e o footer. Além disso, um ou mais arquivos ".css" adicionais foram empregados para a estilização específica das telas, complementando aquela trazida pelo arquivo "style.css". Como exemplo, a tela "Login/Signin" conta com os arquivos ["login.css"](css/login.css) e ["signin.css"](css/signin.css) para estilização completa da página.
+
 ### Plano de Testes
+
+Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta ["Insomnia"](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor
+
 ### Resultado dos Testes
 ### Como rodar?
 ### Problemas Encontrados
