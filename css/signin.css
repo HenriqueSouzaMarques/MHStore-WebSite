@@ -30,6 +30,8 @@
 #signin input[type="text"],
 #signin input[type="password"],
 #signin input[type="date"],
+#signin input[type="email"],
+#signin input[type="tel"],
 #signin input[type="submit"]
 {
     display: block;
@@ -43,7 +45,9 @@
 
 #signin input[type="text"],
 #signin input[type="password"],
-#signin input[type="date"]
+#signin input[type="date"],
+#signin input[type="email"],
+#signin input[type="tel"]
 {
     background-color: white;
     color: #333;
