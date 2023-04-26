@@ -65,7 +65,7 @@ Neste momento, será possível para o usuário indicar o número do cartão de c
 
 ### Plano de Testes
 
-Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta [*Insomnia*](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor
+Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta [*Insomnia*](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor.
 
 ### Resultado dos Testes
 ### Como rodar?
