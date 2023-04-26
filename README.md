@@ -41,7 +41,7 @@ Ao se clicar no botão "Create New Account", uma nova tela surge "acima" da tela
 
 * [**Produtos**](produtos.html): 
 
-O restante das telas necessárias para nossa aplicação, "Carrinho", "Administrador" e "Estoque" foram projetadas com a ferramenta Figma:
+O restante das telas necessárias para nossa aplicação, *Carrinho*, *Administrador* e *Estoque* foram projetadas com a ferramenta [*Figma*](https://www.figma.com/):
 
 * [**Carrinho**](https://www.figma.com/file/cm8SJWyryxJUZSV4lrHFSc/Mockup-Cart?node-id=0%3A1&t=FaCFQwI4LvOrOX23-1): Nesta tela, o usuário é capaz de visualizar a lista de produtos previamente adicionados ao carrinho, além de alterar a quantidade de produtos e remover itens do mesmo. Dessa forma, a página também oferece o custo de cada produto ($c_i = q_i . p_i$, onde $i$ é o produto, $q_i$ é a quantidade de produtos e $p_i$ é o preço unitário do produto) e o custo total da compra ($c_t = \sum c_i$, onde $c_t$ é o custo total). Assim, o usuário pode finalizar a sua compra através do botão *Proceed Purchase*, como pode ser visto na Figura 5:
 
