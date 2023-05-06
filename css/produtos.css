@@ -11,3 +11,85 @@ header h1
     font-family: 'Rubik Pixels', cursive;
     font-family: 'Sedgwick Ave Display', cursive;
 }
+
+.slider_wrapper{
+    position: relative;
+    margin-top: 60px;
+    max-width: 48rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    border-radius: 0.5rem;
+    width: 60%;
+    height: 20%;
+    margin-left: 20%;
+}
+
+.slider{
+    display: flex;
+    background-color: white;
+    aspect-ratio: 16/9;
+}
+
+.slider a img{
+    background-color: blue;
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+    object-fit: cover;
+}
+
+.slider_nav{
+    display: flex;
+    column-gap: 1rem;
+    position: absolute;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.slider_nav a{
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: black;
+    opacity: 0.75;
+}
+
+.carousel{
+    width: 40%;
+    height: 20%;
+    margin-left: 30%;
+    border: black solid 2px;
+    border-radius: 4px;
+}
+
+.products{
+    width: 100%;
+}
+.products img{
+    width: 80%;
+}
+
+.products .display{
+    display: flex;
+    width: 100%;
+    float: right;
+    text-align: center;
+    justify-content: space-around;    
+}
+
+.display div{
+    width: 20%;
+    margin: 10px;
+    box-shadow: 10px 10px 8px #888888;
+
+    border: black solid 2px;
+    border-radius: 10px;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.sec_title{
+    margin-left: 4%;
+}
