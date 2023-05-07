@@ -39,9 +39,15 @@ Ao se clicar no botão "Create New Account", uma nova tela surge "acima" da tela
 ![login2](Mockup/login2.png)
 _Figura 4: Tela de Signin sobreposta a tela de Login._
 
-- [**Sobre Nos**](sobre-nos.html):
+- [**Sobre Nos**](sobre-nos.html): tela com um texto contendo o resumo da história da marca, assim como meios de contato no final.
 
-- [**Produtos**](produtos.html):
+![about_us](Mockup/about_us.jpeg)
+_Figura 5:tela "sobre nós"
+
+- [**Produtos**](produtos.html): página lista produtos ordenados por tipo e seus respectivos preços. No topo há um slider que permite pular para uma sessão específica se o cliente assim desejar.
+
+![produtos](Mockup/products.jpeg)
+
 
 O restante das telas necessárias para nossa aplicação, _Carrinho_, _Administrador_ e _Estoque_ foram projetadas com a ferramenta [_Figma_](https://www.figma.com/):
 
