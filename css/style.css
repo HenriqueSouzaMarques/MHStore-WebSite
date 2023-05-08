@@ -11,6 +11,13 @@ header, .produtos, .marcas
     border-radius: 2px;
 }
 
+header h1
+{
+    font-size: 60px;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;
+}
+
 header
 {
     height: 125px;
