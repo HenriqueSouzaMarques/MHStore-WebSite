@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,49 +9,46 @@
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/signin.css">
 
-        <script src="js/login.js"></script>
+        <script src="js/login.js" defer></script>
 
         <title>MHStore - Log In or Sign In</title>
     </head>
-</head>
 
-<body>
+    <body>
 
-    <img class="img-logo"  src="img/Logo.jpg">
+        <img class="img-logo" src="img/Logo.jpg" alt="logo">
 
-    <div id="login"> 
-        <form method="GET" action="/login">
-          <input type="email" name="email" id="email" placeholder="Email" autocomplete="email"> 
-      
-          <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password">
-      
-          <input type="submit" id="button-login" value="Log In"> 
-        </form>
-      
-        <button onclick="showSignIn()" id="button-createacc">Create New Account</button>
-    </div>      
+        <div id="login"> 
+            <form method="GET" action="/login">
+              <input type="email" name="email" id="email" placeholder="Email" autocomplete="email"> 
+            
+              <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password">
+            
+              <input type="submit" id="button-login" value="Log In"> 
+            </form>
+        
+            <button id="button-createacc">Create New Account</button>
+        </div>      
 
-    <div id="signin">
+        <div id="signin">
+            <button id="button-close">X</button>
 
-        <button id="close-btn" onclick="hideSignIn()">X</button>
+            <form method="POST" action="/signin">
+                <input type="text" name="firstname" id="firstname" placeholder="First name"> <br>
+                <input type="text" name="lastname"  id="lastname"  placeholder="Last name"> <br>
+                <input type="text" name="address"   id="address"   placeholder="Address"> <br>
+                <input type="tel"  name="phone"     id="phone"     placeholder="Phone Number"> <br>
+                <input type="email" name="email-adress" id="email-adress" placeholder="Email"> <br>
 
-        <form method="POST" action="/signin">
-            <input type="text" name="firstname" id="firstname" placeholder="First name"> <br>
-            <input type="text" name="lastname"  id="lastname"  placeholder="Last name"> <br>
-            <input type="text" name="address"   id="address"   placeholder="Address"> <br>
-            <input type="tel"  name="phone"     id="phone"     placeholder="Phone Number"> <br>
-            <input type="email" name="email-adress" id="email-adress" placeholder="Email"> <br>
+                <input type="password" name="new-password" id="new-password" placeholder="New Password"> <br>
 
-            <input type="password" name="new-password" id="new-password" placeholder="New Password"> <br>
+                <label for="birthday"> Birthday: </label>
+                <input type="date" name="teste" id="birthday"> <br>
 
-            <label for="birthday"> Birthday: </label>
-            <input type="date" name="teste" id="birthday" value="Birthday"> <br>
+                <input type="submit" id="button-signin" value="Sign In">
+            </form>
+        </div>
 
-            <input type="submit" id="button-signin" value="Sign In">
-        </form>
-
-    </div>
-
-</body>
+    </body>
 
 </html>
