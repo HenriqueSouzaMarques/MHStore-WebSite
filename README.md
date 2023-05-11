@@ -1,5 +1,13 @@
 # Relatório do Projeto
 
+### Integrantes
+
+|        Nome               |    NUSP   |
+|:-------------------------:|:---------:|
+|   Henrique S. Marques     |  11815722 | 
+|   Gustavo Hitomi da Silva |  11801202 |
+|   Marcos P. N. Filho      |  11819063 | 
+
 ### Requisitos
 
 O sistema deve ter 2 tipos de usuários: Clientes e Administradores.
