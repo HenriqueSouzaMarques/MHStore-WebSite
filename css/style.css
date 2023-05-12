@@ -93,6 +93,8 @@ footer
     align-items: center;
     padding: 20px;
     background-color: #bbb;
+
+    border-top: black solid 2px;
 }
 
 footer > p
