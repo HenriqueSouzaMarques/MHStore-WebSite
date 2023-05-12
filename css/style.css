@@ -1,8 +1,26 @@
 /* General Style for the pages: body, header, and footer */
+@charset "UTF-8";
+
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
 
 body
 {
     background-color: #ccc;
+}
+
+header
+{
+    height: 125px;
+    padding-top: 15px;
+
+    align-items: center;
+    display: flex;
+
+    margin-bottom: 20px;
 }
 
 header, .produtos, .marcas
@@ -18,14 +36,22 @@ header h1
     font-family: 'Sedgwick Ave Display', cursive;
 }
 
-header
+#links
 {
-    height: 125px;
+    margin-left: auto;
+}
+
+ul li
+{
+    display: inline;
+    list-style-type: none;
 }
 
 .img-logo
 {   
+    display: inline-block;
     filter: invert(80%);
+
     width: 155px;
 }
 
@@ -69,24 +95,13 @@ footer
     background-color: #bbb;
 }
 
-footer p
+footer > p
 {
     font-size: 12px;
 }
   
-footer a 
+footer > a 
 {
     font-size: 50px;
     margin-right: 50px;
-}
-
-#logo, #nome-loja
-{
-    float:inline-start;
-}
-
-#links
-{
-    margin-top: 50px;
-    float: inline-end;
 }
