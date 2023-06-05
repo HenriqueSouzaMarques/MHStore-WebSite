@@ -1,0 +1,32 @@
+import React from 'react';
+
+import "../Produtos.css";
+
+import produtos from "../../../data/produtos.json";
+
+import Produto from "../../../components/Produto/Produto"
+
+const Calcas = () =>
+{
+    const calcas = produtos.filter(produto => produto.tipo === "calca");
+
+    return (
+        <>
+            <h3 id="calcas"> Pants </h3>
+        
+            <div className="calcas-container">
+                
+                {calcas.map((calca, index) => (
+                    <Produto 
+                        produto={calca}
+                        key={index}    
+                    />
+                ))}
+                
+            </div>
+        
+        </>
+    )
+}
+
+export default Calcas;
