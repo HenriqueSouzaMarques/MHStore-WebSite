@@ -1,0 +1,46 @@
+.tipo-produto-container
+{
+    width: 25%;
+
+    margin: 10px;
+
+    text-align: center;
+    
+    box-shadow: 10px 10px 8px #888888;
+
+    border: black solid 2px;
+    border-radius: 10px;
+
+    transition: all 0.3s ease-in-out;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.tipo-produto-container:hover
+{
+    background-color: #999;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); 
+}
+
+.tipo-produto-container > h3
+{
+    text-align: center;
+    font-family: 'Rubik Pixels', cursive;
+    font-family: 'Sedgwick Ave Display', cursive;  
+}
+
+.tipo-produto-container > img
+{
+    width: 200px;
+}
+
+.tipo-produto-container > p
+{
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    padding: 20px;
+}
