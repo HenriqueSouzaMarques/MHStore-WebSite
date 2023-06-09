@@ -97,7 +97,10 @@ const Produto = ( { produto } ) =>
                         
                         <div className='estoque'> Stock: {produto.estoque} items </div>
 
-                        <div className='preco'> $ {produto.preco},00 </div>
+                        <div className='preco'> 
+
+                            {produto.preco.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                        </div>
                         
                         <BotaoAdicionar 
                             width={280}    

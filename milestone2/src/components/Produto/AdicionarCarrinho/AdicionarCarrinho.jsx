@@ -6,6 +6,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import './AdicionarCarrinho.css'
+import MudarQuantidade from './MudarQuantidade/MudarQuantidade';
 
 const AdicionarCarrinho = ( { product, closePopUp } ) =>
 {
@@ -47,8 +48,8 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
         <div className='add-carrinho-container'>
             <div className='add-carrinho-conteudo-overlay'>
 
-                <FormControl >
-                    <FormLabel component='legend'>Choose the Size</FormLabel>
+                <FormControl>
+                    <FormLabel >Size</FormLabel>
                     <RadioGroup
                         aria-label='controlled-radio-buttons-group'
                         name='controlled-radio-buttons-group'
@@ -60,40 +61,28 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
                             control={<Radio />} 
                             value={product.tipo === "sneakers" ? 40 : "S"} 
                             label={product.tipo === "sneakers" ? 40 : "S"} 
+                            labelPlacement="bottom"
                         />
                         <FormControlLabel 
                             control={<Radio />} 
                             value={product.tipo === "sneakers" ? 41 : "M"} 
                             label={product.tipo === "sneakers" ? 41 : "M"} 
+                            labelPlacement="bottom"
                         />
                         <FormControlLabel 
                             control={<Radio />} 
                             value={product.tipo === "sneakers" ? 42 : "L"} 
                             label={product.tipo === "sneakers" ? 42 : "L"} 
+                            labelPlacement="bottom"
                         />
                     </RadioGroup>
 
-                    <FormLabel component='legend'>Choose the Quantity</FormLabel>
-                    <div className='quantity-container'>
-
-                        <Button 
-                            className='quantity-button'
-                            variant="contained" 
-                            onClick={handleDecreaseQuantity}
-                        >
-                            Decrease
-                        </Button>
-
-                        <span className='quantity-value'>{quantity}</span>
-
-                        <Button 
-                            className='quantity-button'
-                            variant="contained" 
-                            onClick={handleIncreaseQuantity}
-                        >
-                            Increase
-                        </Button>
-                    </div>
+                    <FormLabel>Quantity</FormLabel>
+                    <MudarQuantidade 
+                        quantity={quantity}
+                        handleDecreaseQuantity={handleDecreaseQuantity}
+                        handleIncreaseQuantity={handleIncreaseQuantity}
+                    />
                 </FormControl>
 
                 <div className='add-carrinho-buttons-container'>

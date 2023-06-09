@@ -1,0 +1,41 @@
+.product-container
+{
+    margin: auto;
+    width: 98%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #999;
+
+    margin-bottom: 10px;
+}
+  
+.product-container .avatar
+{
+    width: 200px;
+    height: 200px;
+    margin-right: 16px;
+}
+  
+.product-container .details 
+{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.product-container .actions
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-container .actions > svg
+{
+    font-size: 24px;
+}
+  
