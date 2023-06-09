@@ -12,8 +12,6 @@ import './App.css'
 
 const App = () =>
 {   
-    laaaaaaa
-
     return (
         <UserProvider>
             <Routes>
