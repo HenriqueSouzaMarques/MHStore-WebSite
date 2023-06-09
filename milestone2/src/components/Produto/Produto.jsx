@@ -1,20 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
 
 import './Produto.css';
-import { Button, ButtonGroup } from '@mui/material';
 
-import InfoIcon from '@mui/icons-material/Info';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { UserContext } from '../../UserContext';
-import { useNavigate } from 'react-router-dom';
-import AdicionarCarrinho from './AdicionarCarrinho/AdicionarCarrinho';
 
-const Produto = ( {produto} ) =>
+import AdicionarCarrinho from './AdicionarCarrinho/AdicionarCarrinho';
+import BotaoAdicionar from './BotaoAdicionar/BotaoAdicionar';
+
+const Produto = ( { produto } ) =>
 {
+    const { userData, updateUserData } = useContext(UserContext);
+
     const [imagem, setImagem] = useState(null);
     const [adicionarCarrinho, setAdicionarCarrinho] = useState(false);
-
-    const { userData, updateUserData } = useContext(UserContext);
 
     useEffect(() => 
     {
@@ -34,65 +32,59 @@ const Produto = ( {produto} ) =>
         importarImagem();
     }, [imagem]);
 
-    const navigate = useNavigate();
-
-    const handleAddCartClick = () =>
-    {
-        const props = 
-        {
-            linkBack: '/products', 
-            createAdmin: false
-        };
-
-        if(!userData)
-        {
-            navigate('/login', { state: props });
-        }
-
-        setAdicionarCarrinho(true);        
-    }
-
-    const handleAddInfoClick = () =>
-    {
-        navigate('/info', { state : {produto}})
-    }
-
     const addProduct = (product, quantity) =>
     {
-        const isProductInArray = (userData.cartProducts).find((obj) =>
-            Object.entries(obj).every(([key, value]) => product[key] === value)
-        );
+        let newData;
 
-        if(isProductInArray && product.quantidade + quantity <= product.estoque)
+        const index = userData.cartProducts.findIndex((obj) => 
         {
-            product.quantidade = product.quantidade + quantity;
+            const { quantidade, ...rest } = obj;
 
-            updateUserData((oldUserData) => ({
-                ...oldUserData, cartProducts: [...oldUserData.cartProducts, product]
-            })); 
+            return JSON.stringify(rest) === JSON.stringify(product);
+        });
+      
+        if(index !== -1)
+        {
+            let novaQuantidade = 
+            (
+                userData.cartProducts[index].quantidade + quantity > product.estoque ? 
+                product.estoque : userData.cartProducts[index].quantidade + quantity
+            );
+
+            const produtosAtualizados = userData.cartProducts.map((obj, i) =>
+            {
+                if (i === index)
+                {
+                    return { ...obj, quantidade: novaQuantidade };
+                }
+
+                return obj;
+            });
+
+            newData = {...userData, cartProducts: produtosAtualizados};
         }
         else
         {
-            let produtoComQuantidade = {...produto, quantidade: quantity};
+            let produtoComQuantidade = {...product, quantidade: quantity};
 
-            updateUserData((oldUserData) => ({
-                ...oldUserData, cartProducts: [...oldUserData.cartProducts, produtoComQuantidade]
-            }));
+            newData = {...userData, cartProducts: [...userData.cartProducts, produtoComQuantidade]};
         }
+
+        updateUserData(newData); 
     }
 
     const closePopUp = (size, quantidade, buy) =>
     {
+        setAdicionarCarrinho(false);
+
         if(buy)
         {
             let produtoComTamanho = {...produto, tamanho: size};
 
             addProduct(produtoComTamanho, quantidade);
         }
-
-        setAdicionarCarrinho(false);
     }
-    
+
     return (
         <>
             {  
@@ -106,25 +98,11 @@ const Produto = ( {produto} ) =>
                         <div className='estoque'> Stock: {produto.estoque} items </div>
 
                         <div className='preco'> $ {produto.preco},00 </div>
-
-                        <ButtonGroup variant="outlined" >
-                            <Button 
-                                endIcon={<InfoIcon/>} 
-                                sx={{width : 140}}
-                                onClick={handleAddInfoClick}
-                            >
-                                Info
-                            </Button>
-
                         
-                            <Button 
-                                endIcon={<AddShoppingCartIcon/>} 
-                                sx={{width : 140}}
-                                onClick={handleAddCartClick}
-                            >
-                                Add Cart
-                            </Button>
-                        </ButtonGroup>
+                        <BotaoAdicionar 
+                            width={280}    
+                            setAdicionarCarrinho={setAdicionarCarrinho}
+                        />
 
                     </div>   
                 : null

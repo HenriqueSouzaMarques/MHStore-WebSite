@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
+
+import { useNavigate } from 'react-router-dom';
 
 import { Paper, ThemeProvider, Button, Grid } from '@mui/material';
 
@@ -11,11 +12,13 @@ import UserInfo from './UserInfo/UserInfo';
 import Address from './Address/Address';
 import Phone from './Phone/Phone'
 
+
 import './SignUp.css'
 
-const SignUp = ( { theme, link } ) => 
+const SignUp = ( { theme, type } ) => 
 {
     const [newUserInfo, setNewUserInfo] = useState({
+        type: type,
         id: '',
         email: '',
         username: '',
@@ -74,10 +77,11 @@ const SignUp = ( { theme, link } ) =>
         setNewUserInfo({ ...newUserInfo, phone: e.target.value });
     };
 
-    const navigate = useNavigate();
-
+    
     const { updateUserData } = useContext(UserContext);
 
+
+    const navigate = useNavigate();
     const handleSubmit = (e) =>
     {
         /* TODO: POST DO NOVO USUARIO */
@@ -88,7 +92,7 @@ const SignUp = ( { theme, link } ) =>
 
         updateUserData(newUserInfo);
 
-        navigate(link);
+        navigate(-1);
     }
 
     return (

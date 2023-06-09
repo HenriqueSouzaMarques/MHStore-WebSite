@@ -1,16 +1,15 @@
 import React, { useContext, useState } from 'react';
 
-
 import { ThemeProvider } from '@mui/material/styles';
 import { TextField, Button, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 import { UserContext } from '../../../UserContext';
 
 
-const LoginForm = ( { theme, setCreateAccount, link } ) =>
+const LoginForm = ( { theme, setCreateAccount, type } ) =>
 {
-    const navigate = useNavigate();
-
+    
     const { updateUserData } = useContext(UserContext);
 
     const [username, setUsername] = useState('');
@@ -27,14 +26,17 @@ const LoginForm = ( { theme, setCreateAccount, link } ) =>
         setPassword(e.target.value);
     };  
 
+    
+    const navigate = useNavigate();
 
     const handleSubmit = (e) =>
     {
         e.preventDefault(); 
-
+        
         /* TODO : LOGIN VALIDATION */
-
+        
         updateUserData({
+            type: type,
             id: '',
             email: '',
             username: username,
@@ -48,7 +50,7 @@ const LoginForm = ( { theme, setCreateAccount, link } ) =>
             cartProducts: []
         });
 
-        navigate(link);
+        navigate(-1);
     };  
 
     return (

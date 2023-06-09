@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { UserContext } from '../../../../UserContext';
+import BotaoLogout from './BotaoLogout/LogoutButton';
 
 const theme = createTheme(
 {
@@ -41,21 +42,30 @@ const UserInfo = () =>
 
     return (
 
-        <ThemeProvider theme={theme}>
+        <>
+            <div>
+                <ThemeProvider theme={theme}>
 
-            <Box display="flex" alignItems="center">
+                    <Box display="flex" alignItems="center">
 
-                <Box sx={theme.userBadge}>
-                    <Typography sx={theme.userBadge}>{getInitials(userData.username)}</Typography>
-                </Box>
+                        <Box sx={theme.userBadge}>
+                            <Typography sx={theme.userBadge}>{getInitials(userData.username)}</Typography>
+                        </Box>
 
-                <Box ml={1}>
-                    <Typography sx={theme.username}>Welcome!</Typography>
-                </Box>
+                        <Box ml={1}>
+                            <Typography sx={theme.username}>Welcome!</Typography>
+                        </Box>
 
-            </Box>
+                        <Box ml={2}>
+                            <BotaoLogout> <Typography >Log Out</Typography> </BotaoLogout> 
+                        </Box>
+                    </Box>
 
-        </ThemeProvider>
+                </ThemeProvider>
+            
+
+            </div>
+        </>
 
     )
 }

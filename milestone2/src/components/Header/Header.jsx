@@ -1,12 +1,12 @@
 import React from "react";
 
-import Logo from "./logo/Logo";
-import LogoMarca from "./logo_marca/LogoMarca";
-import Menu from "./menu/Menu"
+import Logo from "./Logo/Logo";
+import LogoMarca from "./LogoMarca/LogoMarca";
+import Menu from "./Menu/Menu"
 
 import "./Header.css"
 
-const Header = ( { currentPage } ) =>
+const Header = () =>
 (
     
     <header>
@@ -15,7 +15,7 @@ const Header = ( { currentPage } ) =>
 
         <LogoMarca />
 
-        <Menu currentPage={currentPage}/>
+        <Menu />
 
     </header>
 );

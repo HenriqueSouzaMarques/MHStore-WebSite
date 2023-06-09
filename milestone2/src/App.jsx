@@ -9,12 +9,10 @@ import AboutUs from './pages/about_us/AboutUs'
 import { UserProvider } from './UserContext';
 
 import './App.css'
-import ProdutoInfo from './pages/produto_info/ProdutoInfo';
 
 const App = () =>
 {
     return (
-        
         <UserProvider>
             <Routes>
 
@@ -27,8 +25,6 @@ const App = () =>
                 <Route path='/login' element={<Login />} /> 
 
                 <Route path='/about-us' element={<AboutUs />} />
-
-                <Route path='/info' element={<ProdutoInfo />} />
 
             </Routes>
         </UserProvider>

@@ -1,21 +1,15 @@
 import React, { useContext } from "react";
 
-import BotaoHeader from "./botao/BotaoHeader";
-import UserInfo from "./user_info/UserInfo";
+import BotaoHeader from "./BotaoHeader/BotaoHeader";
+import UserInfo from "./UserInfo/UserInfo";
 
 import './Menu.css'
 
 import { UserContext } from "../../../UserContext";
 
-const Menu = ({ currentPage }) =>
+const Menu = () =>
 {
     const { userData } = useContext(UserContext);
-
-    const props = 
-    {
-        linkBack: currentPage, 
-        createAdmin: false
-    }
 
     return (
 
@@ -31,7 +25,7 @@ const Menu = ({ currentPage }) =>
 
                 {userData ? <li> <BotaoHeader link={"/cart"} props={null}> Cart </BotaoHeader> </li> : <></>}
 
-                {!userData ? <li> <BotaoHeader link={"/login"} props={props}>Login</BotaoHeader> </li> : <></>}
+                {!userData ? <li> <BotaoHeader link={"/login"} props={{ type: 'client' }}>Login</BotaoHeader> </li> : <></>}
             </ul>
         </div>
     

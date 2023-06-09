@@ -15,7 +15,7 @@ const Produtos = () =>
 {   
     return (
         <>
-            <Header currentPage={'/products'}/>
+            <Header />
 
             <h2> Products </h2>
 

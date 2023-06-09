@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 
 
-import Logo from '../../components/Header/logo/Logo'
+import { useLocation } from 'react-router-dom';
+
+import Logo from '../../components/Header/Logo/Logo'
 import LoginForm from "./LoginForm/LoginForm";
 
 import './Login.css'
 import SignUp from './SignUp/SignUp';
-import { useLocation } from 'react-router-dom';
 
 const Login = () =>
 {   
-    const [createAccount, setCreateAccount] = useState(false);
-
     const location = useLocation();
-    const { linkBack, createAdmin } = location.state;
+    const { type } = location.state;
+
+    const [createAccount, setCreateAccount] = useState(false);
 
     const theme = createTheme(
     {
@@ -43,16 +44,16 @@ const Login = () =>
             <div className="form-container">
 
                 {
-                    (createAccount) || (createAdmin) ? 
+                    (createAccount || type === 'admin') ? 
                         <SignUp 
-                            theme={theme} 
-                            link={linkBack}    
+                            theme={theme}   
+                            type={type}
                         />
                     :
                         <LoginForm 
                             theme={theme}
                             setCreateAccount={setCreateAccount}
-                            link={linkBack}
+                            type={type}
                         /> 
                 }
                 

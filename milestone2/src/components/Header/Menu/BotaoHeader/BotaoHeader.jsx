@@ -9,14 +9,7 @@ const BotaoHeader = ( {children, link, props} ) =>
 
     const navegar = () =>
     {
-        if(props === null)
-        {
-            navigate(link);
-        }
-        else
-        {
-            navigate(link, { state: props })
-        }
+        navigate(link, { state: props })
     }
 
     return ( <button onClick={navegar} className="botao-header">{children}</button> )

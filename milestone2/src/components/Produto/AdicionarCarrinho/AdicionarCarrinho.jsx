@@ -10,7 +10,7 @@ import './AdicionarCarrinho.css'
 const AdicionarCarrinho = ( { product, closePopUp } ) =>
 {
     const [size, setSize] = useState("M");
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     const handleIncreaseQuantity = () =>
     {
@@ -47,7 +47,7 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
         <div className='add-carrinho-container'>
             <div className='add-carrinho-conteudo-overlay'>
 
-                <FormControl component='fieldset'>
+                <FormControl >
                     <FormLabel component='legend'>Choose the Size</FormLabel>
                     <RadioGroup
                         aria-label='controlled-radio-buttons-group'
@@ -72,21 +72,9 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
                             label={product.tipo === "sneakers" ? 42 : "L"} 
                         />
                     </RadioGroup>
-                </FormControl>
 
-                <FormControl>
                     <FormLabel component='legend'>Choose the Quantity</FormLabel>
-
                     <div className='quantity-container'>
-                        <Button 
-                            className='quantity-button'
-                            variant="contained" 
-                            onClick={handleIncreaseQuantity}
-                        >
-                            Increase
-                        </Button>
-
-                        <span className='quantity-value'>{quantity}</span>
 
                         <Button 
                             className='quantity-button'
@@ -95,10 +83,18 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
                         >
                             Decrease
                         </Button>
+
+                        <span className='quantity-value'>{quantity}</span>
+
+                        <Button 
+                            className='quantity-button'
+                            variant="contained" 
+                            onClick={handleIncreaseQuantity}
+                        >
+                            Increase
+                        </Button>
                     </div>
-
                 </FormControl>
-
 
                 <div className='add-carrinho-buttons-container'>
                     <Button 
