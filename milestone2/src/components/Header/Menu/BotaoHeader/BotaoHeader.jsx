@@ -1,5 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { IconButton } from "@mui/material";
 
 import './BotaoHeader.css'
 
@@ -12,7 +14,7 @@ const BotaoHeader = ( {children, link, props} ) =>
         navigate(link, { state: props })
     }
 
-    return ( <button onClick={navegar} className="botao-header">{children}</button> )
+    return ( <IconButton onClick={navegar} className="botao-header"> {children} </IconButton> )
 }
     
 

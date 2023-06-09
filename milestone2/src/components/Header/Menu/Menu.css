@@ -16,8 +16,15 @@
     border-radius: 5px;
 }
 
+.total-products
+{
+    font-size: 15px;
+    color: red;
+}
+
 li
 {
     display: inline;
     list-style-type: none;
+    margin-right: 20px;
 }

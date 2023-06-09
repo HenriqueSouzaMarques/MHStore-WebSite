@@ -29,7 +29,8 @@ const SignUp = ( { theme, type } ) =>
         number: '',
         zipCode: '',
         phone: '',
-        cartProducts: []
+        cartProducts: [],
+        totalProducts: 0
     })
 
     const handleEmailChange = (e) =>

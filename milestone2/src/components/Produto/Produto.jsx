@@ -61,13 +61,16 @@ const Produto = ( { produto } ) =>
                 return obj;
             });
 
+        
             newData = {...userData, cartProducts: produtosAtualizados};
+            newData = {...newData, totalProducts: (newData.totalProducts += novaQuantidade)};
         }
         else
         {
             let produtoComQuantidade = {...product, quantidade: quantity};
 
             newData = {...userData, cartProducts: [...userData.cartProducts, produtoComQuantidade]};
+            newData = {...newData, totalProducts: (newData.totalProducts += quantity)}; 
         }
 
         updateUserData(newData); 

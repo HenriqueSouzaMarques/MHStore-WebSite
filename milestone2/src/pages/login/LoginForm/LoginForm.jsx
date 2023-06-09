@@ -47,7 +47,8 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
             number: '',
             zipCode: '',
             phone: '',
-            cartProducts: []
+            cartProducts: [],
+            totalProducts: 0
         });
 
         navigate(-1);

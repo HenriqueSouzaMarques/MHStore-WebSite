@@ -10,7 +10,7 @@ import MudarQuantidade from './MudarQuantidade/MudarQuantidade';
 
 const AdicionarCarrinho = ( { product, closePopUp } ) =>
 {
-    const [size, setSize] = useState("M");
+    const [size, setSize] = useState(product.tipo === "sneakers" ? 41 : 'M');
     const [quantity, setQuantity] = useState(1);
 
     const handleIncreaseQuantity = () =>
