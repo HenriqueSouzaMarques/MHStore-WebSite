@@ -45,7 +45,7 @@ const Produto = ( { produto } ) =>
       
         if(index !== -1)
         {
-            let novaQuantidade = 
+            const novaQuantidade = 
             (
                 userData.cartProducts[index].quantidade + quantity > product.estoque ? 
                 product.estoque : userData.cartProducts[index].quantidade + quantity
@@ -63,8 +63,11 @@ const Produto = ( { produto } ) =>
 
         
             newData = {...userData, cartProducts: produtosAtualizados};
-            newData = {...newData, totalProducts: (newData.totalProducts += novaQuantidade)};
-            newData = {...newData, purchaseAmount: (newData.purchaseAmount) += (novaQuantidade * product.preco)}
+
+            if(userData.cartProducts[index].quantidade + quantity <= product.estoque)
+            {
+                newData = {...newData, totalProducts: (userData.totalProducts += quantity)};
+            }
         }
         else
         {
