@@ -118,7 +118,6 @@ const Produto = ( { produto } ) =>
             {
                 adicionarCarrinho && 
                 <AdicionarCarrinho 
-                    updateUserData={updateUserData}
                     product={produto}  
                     closePopUp={closePopUp}  
                 />

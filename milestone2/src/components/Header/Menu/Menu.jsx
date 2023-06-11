@@ -27,8 +27,6 @@ const Menu = ( ) =>
 
                 <li> <BotaoHeader link={"/products"} props={null}><CheckroomIcon /></BotaoHeader> </li>
 
-                <li> <BotaoHeader link={"/about-us"} props={null}><InfoIcon /></BotaoHeader> </li>
-
                 {userData ? <li> <BotaoHeader link={"/cart"} props={null}> 
                 
                     <ShoppingCartIcon /> <span className="total-products"> {userData.totalProducts}</span> </BotaoHeader> 
