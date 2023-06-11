@@ -9,9 +9,3 @@
 
     margin: auto 0;
 }
-
-.blur
-{
-    filter: blur(4px); /* Add the desired blur effect */
-    pointer-events: none; /* Disable pointer events on the blurred element */
-}

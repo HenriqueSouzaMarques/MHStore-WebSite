@@ -7,11 +7,42 @@ import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 
 import './Carrinho.css';
+import PrecoTotal from "./PrecoTotal/PrecoTotal";
+import { useNavigate } from "react-router-dom";
 
 const Carrinho = () =>
 {
     const { userData, updateUserData } = useContext(UserContext);
-    const [ total, setTotal ] = useState(0);
+
+    const [isBlurred, setIsBlurred] = useState(false);
+
+    const handleIsBlurred = () =>
+    {
+        setIsBlurred(true);
+    }
+
+    const navigate = useNavigate();
+
+    const finalizePurchase = ( buy ) =>
+    {
+        if(buy)
+        {
+            let newData = {...userData, cartProducts: []};
+            newData = {...newData, totalProducts: 0};
+            newData = {...newData, purchaseAmount: 0};
+
+            updateUserData(newData);
+            
+            navigate('/');
+            
+            alert("Success Purchase!");
+        }
+        else
+        {
+            setIsBlurred(false);
+        }
+
+    }
 
     useEffect(() => 
     {
@@ -42,8 +73,10 @@ const Carrinho = () =>
             {
                 valorTotal += (element.quantidade) * (element.preco);
             });
+
+            let newData = {...userData, purchaseAmount: valorTotal}
             
-            setTotal(valorTotal);
+            updateUserData(newData);
         }
 
 
@@ -52,32 +85,40 @@ const Carrinho = () =>
     return (
         <>
             <Header/>
+            <div className={isBlurred && 'blur'}>
 
-            <h2> Cart </h2>
+                <h2> Cart </h2>
 
-            {
-                (userData === null) || (userData.totalProducts === 0) ? 
-                    <h2> No elements!</h2>
+                {
+                    (userData === null) || (userData.totalProducts === 0) ? 
+                        <h2> No elements!</h2>
 
-                :
-                    
-                (
-                    <>
-                        {
-                            (userData.cartProducts).map((produto, index) =>
-                            (
-                                <ProdutoCarrinho 
-                                    index={index}
-                                    key={index}
-                                />
-                            ))
-                        }
+                    :
+                        
+                    (
+                        <>
+                            {
+                                (userData.cartProducts).map((produto, index) =>
+                                (
+                                    <ProdutoCarrinho 
+                                        index={index}
+                                        key={index}
+                                    />
+                                ))
+                            }
 
-                        <h4> Total : {total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} </h4>
-                    </>    
-                )
+                        </>    
+                    )
+                }
+            </div>
 
-            }
+        {            
+            (userData !== null) && (userData.totalProducts !== 0) &&
+                <PrecoTotal 
+                    handleFinalizePurchase={finalizePurchase}
+                    handleIsBlurred={handleIsBlurred}
+                />
+        }
 
         </>
     )

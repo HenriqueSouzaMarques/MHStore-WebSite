@@ -18,7 +18,7 @@ const Tenis = () =>
                 
                 {tenis.map((tenis, index) => (
                     <Produto 
-                        produto={tenis}
+                        produto={tenis}z
                         key={index}    
                     />
                 ))}

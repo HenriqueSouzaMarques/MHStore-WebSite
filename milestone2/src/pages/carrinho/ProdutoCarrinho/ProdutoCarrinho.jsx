@@ -34,49 +34,45 @@ const ProdutoCarrinho = ( { index } ) =>
         importarImagem();
     }, [userData]);
 
-
     const { tamanho, marca, nome, preco, quantidade, estoque } = userData.cartProducts[index];
     const handleIncreaseQuantity = () =>
     {
-        let novaQuantidade = 
-        (
-            quantidade + 1 > estoque ? 
-            estoque : quantidade + 1
-        );
+        if(quantidade < estoque)
+        {
+            const novoTotal = quantidade + 1;
 
-        let novoProduto = {...userData.cartProducts[index], quantidade: novaQuantidade};
+            const novoProduto = {...userData.cartProducts[index], quantidade: novoTotal};
 
-        const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
-        
-        const novosDados = {...userData, cartProducts: novoCarrinho};
+            const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
 
-        updateUserData(novosDados);
+            const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: userData.totalProducts + 1};
+
+            updateUserData(novosDados);
+        }
+
     }
 
     const handleDecreaseQuantity = () =>
     {
-        let novaQuantidade = 
-        (
-            quantidade - 1 > 1 ? 
-            quantidade - 1 : 1
-        );
+        if(quantidade > 1)
+        {
+            const novoTotal = quantidade - 1;
 
-        let novoProduto = {...userData.cartProducts[index], quantidade: novaQuantidade};
+            const novoProduto = {...userData.cartProducts[index], quantidade: novoTotal};
 
-        const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
-        
-        const novosDados = {...userData, cartProducts: novoCarrinho};
+            const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
 
-        updateUserData(novosDados);
+            const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: userData.totalProducts - 1};
+
+            updateUserData(novosDados);
+        }  
     }
 
     const handleDelete = () =>
     {
-        let novoCarrinho = [...userData.cartProducts];
+        let novoCarrinho = (userData.cartProducts).slice(0, index).concat((userData.cartProducts).slice(index + 1));
 
-        novoCarrinho.splice(index, 1);
-
-        let novosDados = {...userData, cartProducts: novoCarrinho};
+        const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: (userData.totalProducts - quantidade)};
 
         updateUserData(novosDados);
     }

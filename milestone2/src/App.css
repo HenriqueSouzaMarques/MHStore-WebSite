@@ -6,3 +6,15 @@ body
 
     flex-direction: column;
 }
+
+.blur
+{
+    z-index: 0;
+    filter: blur(4px); /* Add the desired blur effect */
+    pointer-events: none; /* Disable pointer events on the blurred element */
+}
+
+.put-behind
+{
+    z-index: 0;
+}

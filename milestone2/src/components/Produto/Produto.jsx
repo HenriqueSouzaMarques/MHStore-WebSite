@@ -64,6 +64,7 @@ const Produto = ( { produto } ) =>
         
             newData = {...userData, cartProducts: produtosAtualizados};
             newData = {...newData, totalProducts: (newData.totalProducts += novaQuantidade)};
+            newData = {...newData, purchaseAmount: (newData.purchaseAmount) += (novaQuantidade * product.preco)}
         }
         else
         {
@@ -71,6 +72,7 @@ const Produto = ( { produto } ) =>
 
             newData = {...userData, cartProducts: [...userData.cartProducts, produtoComQuantidade]};
             newData = {...newData, totalProducts: (newData.totalProducts += quantity)}; 
+            newData = {...newData, purchaseAmount: (newData.purchaseAmount) += (quantity * product.preco)}
         }
 
         updateUserData(newData); 
@@ -91,8 +93,8 @@ const Produto = ( { produto } ) =>
     return (
         <>
             {  
-                produto.estoque > 0 ?                 
-                    <div className='produto-container'>
+                produto.estoque > 0 &&                
+                    <div className={!adicionarCarrinho ? 'produto-container' : 'produto-container put-behind'}>
 
                         <div className='nome'> {produto.marca} {produto.nome} </div>
 
@@ -111,7 +113,6 @@ const Produto = ( { produto } ) =>
                         />
 
                     </div>   
-                : null
             }
 
             {

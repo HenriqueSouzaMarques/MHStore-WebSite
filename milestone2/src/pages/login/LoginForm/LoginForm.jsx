@@ -46,9 +46,11 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
             street: '',
             number: '',
             zipCode: '',
+            fullAdfress: '',
             phone: '',
             cartProducts: [],
-            totalProducts: 0
+            totalProducts: 0,
+            purchaseAmount: 0
         });
 
         navigate(-1);

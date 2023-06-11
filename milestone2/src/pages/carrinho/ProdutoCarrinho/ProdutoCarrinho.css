@@ -29,6 +29,7 @@
   
 .product-info-container .details 
 {
+    margin: auto auto;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -30,7 +30,8 @@ const SignUp = ( { theme, type } ) =>
         zipCode: '',
         phone: '',
         cartProducts: [],
-        totalProducts: 0
+        totalProducts: 0,
+        purchaseAmount: 0
     })
 
     const handleEmailChange = (e) =>
@@ -91,7 +92,7 @@ const SignUp = ( { theme, type } ) =>
 
         setNewUserInfo({ ...newUserInfo, id: uuidv4() });
 
-        updateUserData(newUserInfo);
+        updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + "" + newUserInfo.zipCode});
 
         navigate(-1);
     }
