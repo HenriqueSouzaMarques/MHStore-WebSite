@@ -35,7 +35,7 @@ const Carrinho = () =>
             
             navigate('/');
             
-            alert("Success Purchase!");
+            alert("Purchase completed successfully!");
         }
         else
         {

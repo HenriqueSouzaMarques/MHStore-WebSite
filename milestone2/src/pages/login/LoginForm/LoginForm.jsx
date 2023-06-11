@@ -46,7 +46,7 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
             street: '',
             number: '',
             zipCode: '',
-            fullAdfress: '',
+            fullAddress: '',
             phone: '',
             cartProducts: [],
             totalProducts: 0,

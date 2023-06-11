@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 
-import { Button, IconButton } from '@mui/material';
+import { Button, FormControl, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -12,6 +12,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { UserContext } from "../../../../UserContext";
 
 import './FinalizarCompra.css'
+import { CreditCard } from '@mui/icons-material';
 
 const FinalizarCompra = ( { closeFinalize } ) =>
 {
@@ -20,6 +21,8 @@ const FinalizarCompra = ( { closeFinalize } ) =>
     const [total, setTotal] = useState(userData.purchaseAmount);
 
     const [address, setAddress] = useState(userData.fullAddress);
+    const [creditCard, setCreditCart] = useState('');
+
     const [isEditing, setIsEditing] = useState(false);
 
     const [discountCoupon, setDiscountCoupon] = useState('');
@@ -47,9 +50,23 @@ const FinalizarCompra = ( { closeFinalize } ) =>
         setDiscountCoupon(e.target.value);
     };
 
-    const closeBuying = () =>
+    const handleCCChange = (e) =>
     {
-        closeFinalize(true);
+        setCreditCart(e.target.value);
+    };
+
+    const closeBuying = (e) =>
+    {
+        e.preventDefault();
+
+        if(address === '' || isEditing)
+        {
+            alert("You must confirm an address to receive your products!");
+        }
+        else
+        {
+            closeFinalize(true);
+        }
     }
 
     const closeNotBuying = () =>
@@ -107,73 +124,88 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
                 </h4>
 
-                <div className='address-container'>  
-                    <h4> Address: </h4>
-            
-                        <TextField
-                            style={{marginLeft: '5px'}}
-                            value={address}
-                            onChange={handleAddressChange}
-                            variant="outlined"
-                            InputProps={{
-                                readOnly: !isEditing
-                            }}
-                        />  
+                <form onSubmit={closeBuying}>
+                    <div className='address-container'>  
+                        <h4> Address: </h4>
                 
-                        <IconButton 
-                            style={{color: 'black'}}
-                            onClick={isEditing ? handleSaveClick : handleEditClick}
+                            <TextField
+                                style={{marginLeft: '5px'}}
+                                value={address}
+                                onChange={handleAddressChange}
+                                variant="outlined"
+                                InputProps={{
+                                    readOnly: !isEditing
+                                }}
+                                placeholder='Insert Address'
+                            />  
+                    
+                            <IconButton 
+                                style={{color: 'black'}}
+                                onClick={isEditing ? handleSaveClick : handleEditClick}
+                            >
+                                {isEditing ? <CheckIcon /> : <Edit />}
+                            </IconButton>
+                    </div>
+
+                    <div className='cupom-container'>
+                        <h4> Coupon: </h4>
+
+                            <TextField
+                                value={discountCoupon}
+                                style={{marginLeft: '5px'}}
+                                onChange={handleCouponChange}
+                                variant="outlined"
+                                placeholder='Insert Coupon'
+                                InputProps={{
+                                    readOnly: isValidCoupon
+                                }}
+                            />
+
+                            <IconButton 
+                                style={{color: 'black'}}
+                                onClick={isValidCoupon ? handleDisableCoupon : handleApplyCoupon}
+                            >
+                                {!isValidCoupon ? <Send /> : <Clear />}
+                            </IconButton>
+
+                    </div>
+
+                    <div className='credit-card-container'>
+                            <h4> C. Card: </h4>
+                            
+                            <TextField
+                                style={{marginLeft: '5px'}}
+                                required
+                                value={creditCard}
+                                onChange={handleCCChange}
+                                variant="outlined"
+                                placeholder='Insert Credit Card'
+                            />
+                    </div>
+
+                    <div className='add-carrinho-buttons-container'>
+                        <Button 
+                            type='submit'
+                            style={{color: 'black', borderColor: 'black'}}
+                            variant="outlined" 
+                            endIcon={<ShoppingCartIcon />}
                         >
-                            {isEditing ? <CheckIcon /> : <Edit />}
-                        </IconButton>
-                </div>
+                            Finalize Purchase
+                        </Button>
 
-                <div className='cupom-container'>
-                    <h4> Coupon: </h4>
 
-                        <TextField
-                            value={discountCoupon}
-                            style={{marginLeft: '5px'}}
-                            onChange={handleCouponChange}
-                            variant="outlined"
-                            placeholder='Insert Coupon'
-                            InputProps={{
-                                readOnly: isValidCoupon
-                            }}
-                        />
-
-                        <IconButton 
-                            style={{color: 'black'}}
-                            onClick={isValidCoupon ? handleDisableCoupon : handleApplyCoupon}
+                        <Button 
+                            style={{color: 'black', borderColor: 'black'}}
+                            variant="outlined" 
+                            endIcon={<CancelIcon/>} 
+                            onClick={closeNotBuying}
+                            
                         >
-                            {!isValidCoupon ? <Send /> : <Clear />}
-                        </IconButton>
+                            Cancel
+                        </Button>
 
-                </div>
-
-                <div className='add-carrinho-buttons-container'>
-                    <Button 
-                        style={{color: 'black', borderColor: 'black'}}
-                        variant="outlined" 
-                        onClick={closeBuying}
-                        endIcon={<ShoppingCartIcon />}
-                    >
-                        Finalize Purchase
-                    </Button>
-
-
-                    <Button 
-                        style={{color: 'black', borderColor: 'black'}}
-                        variant="outlined" 
-                        endIcon={<CancelIcon/>} 
-                        onClick={closeNotBuying}
-                        
-                    >
-                        Cancel
-                    </Button>
-
-                </div>
-
+                    </div>
+                </form>
             </div>
         
         </div>

@@ -28,6 +28,7 @@ const SignUp = ( { theme, type } ) =>
         street: '',
         number: '',
         zipCode: '',
+        fullAddress: '',
         phone: '',
         cartProducts: [],
         totalProducts: 0,
@@ -92,7 +93,7 @@ const SignUp = ( { theme, type } ) =>
 
         setNewUserInfo({ ...newUserInfo, id: uuidv4() });
 
-        updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + "" + newUserInfo.zipCode});
+        updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode});
 
         navigate(-1);
     }

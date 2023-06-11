@@ -68,6 +68,10 @@ const Produto = ( { produto } ) =>
             {
                 newData = {...newData, totalProducts: (userData.totalProducts += quantity)};
             }
+            else
+            {
+                newData = {...newData, totalProducts: (userData.totalProducts += (product.estoque - userData.cartProducts[index].quantidade))}
+            }
         }
         else
         {
