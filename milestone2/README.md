@@ -61,7 +61,7 @@ O restante das telas necessárias para nossa aplicação, _Carrinho_, _Administr
 
 - [**Carrinho**](https://www.figma.com/file/cm8SJWyryxJUZSV4lrHFSc/Mockup-Cart?node-id=0%3A1&t=FaCFQwI4LvOrOX23-1): Nesta tela, o usuário é capaz de visualizar a lista de produtos previamente adicionados ao carrinho, além de alterar a quantidade de produtos, remover itens do mesmo e especificar o tamanho do produto. Dessa forma, a página também oferece o custo de cada produto ($c_i = q_i . p_i$, onde $i$ é o produto, $q_i$ é a quantidade de produtos e $p_i$ é o preço unitário do produto) e o custo total da compra ($c_t = \sum c_i$, onde $c_t$ é o custo total). Assim, o usuário pode finalizar a sua compra através do botão _Proceed Purchase_, como pode ser visto na Figura 5:
 
-![mockup-carrinho](../Mockup/Figma-Cart-Before.png)
+![mockup-carrinho](../Milestone1/Mockup/Figma-Cart-Before.png)
 _Figura 5: Tela do carrinho da aplicação._
 
 Clicando no botão _Proceed Purchase_, uma aba se abre (interatividade será escrita utilizando _JavaScript_) permitindo a finalização da compra, como mostrado na Figura 6:
