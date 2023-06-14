@@ -1,0 +1,46 @@
+.products-container{
+    margin-left: 5%;
+    margin-right: 5%;
+    font-style: normal;
+    text-align: center;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.product{
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    text-align: center;
+    border-style: solid;
+    border-radius: 5px;
+    
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content{
+    display: flex;
+    flex-basis: 100%;
+}
+
+.image{
+    float: left;
+
+    flex-basis: 10%;
+}
+
+.image img{
+    width: 20%;
+}
+
+.text{
+    flex-basis: 70%;
+}
+
+.inner-title{
+    font-size: medium;
+    text-align: left;
+    
+    flex-basis: 100%;
+    text-align: center;
+}
