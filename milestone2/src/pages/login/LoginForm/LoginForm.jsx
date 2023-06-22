@@ -6,18 +6,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../../../UserContext';
 
+import { users } from '../../../data/users.js'
 
 const LoginForm = ( { theme, setCreateAccount, type } ) =>
 {
     
     const { updateUserData } = useContext(UserContext);
 
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');   
 
-    const handleUsernameChange = (e) =>
+    const handleEmailChange = (e) =>
     {
-        setUsername(e.target.value);
+        setEmail(e.target.value);
     };
     
     
@@ -32,28 +33,22 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
     const handleSubmit = (e) =>
     {
         e.preventDefault(); 
-        
-        /* TODO : LOGIN VALIDATION */
-        
-        updateUserData({
-            type: type,
-            id: '',
-            email: '',
-            username: username,
-            password: password,
-            name: '',
-            gender: '',
-            street: '',
-            number: '',
-            zipCode: '',
-            fullAddress: '',
-            phone: '',
-            cartProducts: [],
-            totalProducts: 0,
-            purchaseAmount: 0
-        });
 
-        navigate(-1);
+        const user = users.find
+        (
+            (user) => user.email === email && user.password === password
+        )
+
+        if(user)
+        {
+            updateUserData(user);
+
+            navigate(-1);
+        }
+        else
+        {
+            alert("User or password wrong!")
+        }        
     };  
 
     return (
@@ -73,13 +68,14 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
 
                 <form onSubmit={handleSubmit} >
                     <TextField
-                        label="Username"
+                        label="Email"
+                        type="email"
                         variant="outlined"
                         fullWidth
                         required
                         margin="normal"
-                        value={username}
-                        onChange={handleUsernameChange}
+                        value={email}
+                        onChange={handleEmailChange}
                     />
 
                     <TextField

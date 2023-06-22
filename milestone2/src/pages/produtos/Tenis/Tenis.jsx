@@ -2,7 +2,7 @@ import React from 'react';
 
 import "../Produtos.css";
 
-import produtos from "../../../data/produtos.json";
+import { produtos } from "../../../data/produtos.js";
 
 import Produto from "../../../components/Produto/Produto";
 

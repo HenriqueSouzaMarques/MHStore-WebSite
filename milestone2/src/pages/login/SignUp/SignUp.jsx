@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import {v4 as uuidv4} from 'uuid';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -12,13 +11,15 @@ import UserInfo from './UserInfo/UserInfo';
 import Address from './Address/Address';
 import Phone from './Phone/Phone'
 
+import { users } from '../../../data/users.js'
+
 
 import './SignUp.css'
 
-const SignUp = ( { theme, type } ) => 
+const SignUp = ( { theme } ) => 
 {
     const [newUserInfo, setNewUserInfo] = useState({
-        type: type,
+        type: '',
         id: '',
         email: '',
         username: '',
@@ -87,15 +88,27 @@ const SignUp = ( { theme, type } ) =>
     const navigate = useNavigate();
     const handleSubmit = (e) =>
     {
-        /* TODO: POST DO NOVO USUARIO */
-        
         e.preventDefault();
+        
+        const alreadyUser = users.some((user) => user.email === newUserInfo.email)
 
-        setNewUserInfo({ ...newUserInfo, id: uuidv4() });
+        if (alreadyUser)
+        {
+            alert("account already registered!")
+        }
+        else
+        {
+            const lastUser = users[users.length - 1]
 
-        updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode});
-
-        navigate(-1);
+            setNewUserInfo({ ...newUserInfo, id: lastUser.id + 1 });
+    
+            updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode});
+    
+            users.push(newUserInfo);
+            
+            navigate(-1);
+        }
+        
     }
 
     return (

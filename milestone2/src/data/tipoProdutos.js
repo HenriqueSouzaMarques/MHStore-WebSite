@@ -1,3 +1,4 @@
+export const tipoProdutos = 
 [
     {
         "nome": "T-Shirts",

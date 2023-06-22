@@ -1,3 +1,4 @@
+export const produtos = 
 [
   {
   "nome": "White T-Shirt",

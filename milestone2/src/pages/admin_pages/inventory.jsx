@@ -3,14 +3,14 @@ import { UserContext } from "../../UserContext"
 import Header from "../../components/Header/Header";
 import "./inventory.css"
 import Product from "./produtos/Product"
-import produtos from "../../data/produtos.json";
+import { produtos } from "../../data/produtos.js";
 
 const Inventory = () =>{
     const teste = produtos;
 
     return (
         <div className="inventory">
-            <Header currentPage={"/inventorio"}/>
+            <Header/>
             <div className="products-container">
                 <h1>product goes here</h1>
                 {

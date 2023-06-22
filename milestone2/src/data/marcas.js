@@ -1,3 +1,4 @@
+export const marcas =
 [
     {
         "nome": "Adidas",
