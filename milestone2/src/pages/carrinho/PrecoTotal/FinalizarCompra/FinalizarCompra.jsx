@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 
-import { Button, FormControl, IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
 import Edit from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -11,8 +11,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { UserContext } from "../../../../UserContext";
 
+import { cupons } from "../../../../data/cupons.js"
+
 import './FinalizarCompra.css'
-import { CreditCard } from '@mui/icons-material';
 
 const FinalizarCompra = ( { closeFinalize } ) =>
 {
@@ -81,20 +82,36 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
     const handleApplyCoupon = () =>
     {
-        /* TODO: DISCOUNT COUPON VERIFICATION */
+        const cupom = cupons.find
+        (
+            (cupom) => cupom.nome === discountCoupon
+        )
+
         if(discountCoupon)
         {
-            setDiscount(userData.purchaseAmount / 10);
+            const cupom = cupons.find
+            (
+                (cupom) => cupom.nome === discountCoupon
+            )
 
-            const novoTotal = userData.purchaseAmount - (userData.purchaseAmount / 10);
-
-            setTotal(novoTotal);
-
-            const novosDados = {...userData, purchaseAmount: novoTotal};
-
-            updateUserData(novosDados);
-
-            setIsValidCoupon(true);
+            if(cupom)
+            {
+                setDiscount(userData.purchaseAmount / (100 / cupom.desconto));
+    
+                const novoTotal = userData.purchaseAmount - (userData.purchaseAmount / (100 / cupom.desconto));
+    
+                setTotal(novoTotal);
+    
+                const novosDados = {...userData, purchaseAmount: novoTotal};
+    
+                updateUserData(novosDados);
+    
+                setIsValidCoupon(true);
+            }
+            else
+            {
+                alert('Invalid coupon!')
+            }
         }
     };
 

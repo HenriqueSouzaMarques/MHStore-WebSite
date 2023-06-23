@@ -42,8 +42,15 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
         if(user)
         {
             updateUserData(user);
-
-            navigate(-1);
+            
+            if(user.type === 'admin')
+            {
+                navigate("/");
+            }
+            else
+            {
+                navigate(-1);
+            }
         }
         else
         {
@@ -68,11 +75,11 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
 
                 <form onSubmit={handleSubmit} >
                     <TextField
+                        required
                         label="Email"
                         type="email"
                         variant="outlined"
                         fullWidth
-                        required
                         margin="normal"
                         value={email}
                         onChange={handleEmailChange}

@@ -19,7 +19,7 @@ import './SignUp.css'
 const SignUp = ( { theme } ) => 
 {
     const [newUserInfo, setNewUserInfo] = useState({
-        type: '',
+        type: 'cliente',
         id: '',
         email: '',
         username: '',
@@ -100,7 +100,7 @@ const SignUp = ( { theme } ) =>
         {
             const lastUser = users[users.length - 1]
 
-            setNewUserInfo({ ...newUserInfo, id: lastUser.id + 1 });
+            setNewUserInfo({ ...newUserInfo, id: lastUser.id + 1});
     
             updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode});
     
