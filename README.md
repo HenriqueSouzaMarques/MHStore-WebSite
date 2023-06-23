@@ -86,19 +86,30 @@ Neste momento, será possível para o usuário indicar o número do cartão de c
 - [Estilo das Telas](css): para facilitar o reuso de código, o arquivo [_style.css_](css/style.css) foi criado contendo o estilo dos elementos compartilhados, praticamente, por todas as telas da nossa aplicação, como o body, o header e o footer. Além disso, um ou mais arquivos _.css_ adicionais foram empregados para a estilização específica das telas, complementando aquela trazida pelo arquivo _style.css_. Como exemplo, a tela _Login/Signin_ conta com os arquivos [_login.css_](css/login.css) e [_signin.css_](css/signin.css) para estilização completa da página.
 
 ### Plano de Testes
+Os testes, nesse momento do desenvolvimento do projeto, tem como objetivo simular a experiência do usuário da aplicação, e portanto, os seguintes passos podem ser utilizados para testar todas as características do site:
 
-Ainda não temos um plano robusto para realização de testes da aplicação WEB. Entretanto, conforme aprendido nas primeiras aulas do curso, consideramos que a ferramenta [_Insomnia_](https://insomnia.rest) pode ser bastante útil para realização de testes referentes às comunicações HTTP estabelecidas entre cliente e servidor.
+1. Navegação inicial pelas páginas do site com usuário deslogado: acesso das páginas "home" e "produtos" através do header, bem como navegação direta para as diferentes seções da página "produtos" com as indicações dos tipos de produtos vendidos na página "home".
+2. Adicionando no carrinho com usuário deslogado: pode-se tentar adicionar algum produto no carrinho com o usuário deslogado. A resposta do site deve ser o redirecionamento para a página de login, para que, após login/cadastro, seja possível realizar a adição ao carrinho.
+3. Fazendo o login: até o presente momento, duas contas podem ser acessadas pois estão salvas estaticamente em um array json (cliente@cliente.com 1234, admin@admin.com 1234). O site deve verificar a corretude tanto do email quanto da senha. Caso um dos dois estiverem errados, um "alert" deve indicar o não êxito do login. Caso haja correspondência no login, o redirecionamento deve ser feito para a página anterior ao login.
+4. Cadastrando novo usuário: aceita-se, até o momento, qualquer valor no formulário. Após a criação do novo usuário, espera-se que haja redirecionamento para a página que havia sido acessada logo anteriormente ao cadastro, porém agora com o usuário já logado com a nova conta.
+5. Após cadastro/login pode-se tentar novamente adicionar produtos no carrinho. Agora, deve ser bem sucedido.
+6. Carrinho: com os produtos adicionados, pode-se testar várias coisas no carrinho: aumento da quantidade de certo produto até o limite do estoque, diminuição da quantidade de um produto até a quantidade mínima (1 produto) e remoção de um produto do carrinho.
+7. Finalização da compra: após diversas modificações no carrinho, pode-se prosseguir para a finalização da compra. Neste momento, é possível editar o endereço de entrega (valor padrão é aquele cadastrado pelo usuário na hora da criação da conta), bem como inserir o cupom de desconto (até o momento, 3 cupons são possíveis, "DESCONTO10" 10% de desconto, "DESCONTO20" 20% de desconto e "DESCONTO30" 30% de desconto). Qualquer cupom inválido deve ser avisado ao usuário através de um "alert".
+8. Após a finalização da compra, o usuário deve ser redirecionado a página "home" com o carrinho esvaziado. A partir de então, todo processo pode ser repetido.
+9. Deslogando: há a opção, também, de deslogar sua conta a partir do header. Assim, a inserção no carrinho deve passar a ser negada novamente.
+
 
 ### Resultado dos Testes
+Os testes manuais descrito acima foram realizados diversas vezes e tudo parece funcionar normalmente sem bugs.
 
-Por enquanto todos os testes foram feitos de forma manual na nossa aplicação, visto que os endpoints ainda não foram criados
 ### Como rodar?
-
 No diretório Milestone2 usar os seguintes comandos:
 
 `npm install`
 
 `npm start`
+
+Após tal procedimento, uma aba do browser de preferência deve ser aberta rodando a aplicação.
 ### Problemas Encontrados
 
 TODO: Criar a página admin e suas funções
