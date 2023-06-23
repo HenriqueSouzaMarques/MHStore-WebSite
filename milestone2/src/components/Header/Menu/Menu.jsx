@@ -22,6 +22,8 @@ const Menu = () =>
         <div className="menu-container">
             <ul>
                 {userData && <li className="user-info"> <UserInfo /> </li>}
+                
+                <li> <BotaoHeader link={"/"} props={null}> <HomeIcon /> </BotaoHeader> </li>
 
                 {
                     userData && userData.type === 'admin' && 
@@ -32,7 +34,6 @@ const Menu = () =>
                     </li>
                 }
 
-                <li> <BotaoHeader link={"/"} props={null}> <HomeIcon /> </BotaoHeader> </li>
 
                 {
                     userData && userData.type === 'admin' ?
