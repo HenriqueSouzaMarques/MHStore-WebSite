@@ -45,8 +45,8 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
     }
 
     return (
-        <div className='add-carrinho-container'>
-            <div className='add-carrinho-conteudo-overlay'>
+        <div className='pop-up-container'>
+            <div className='pop-up-conteudo-overlay'>
 
                 <FormControl>
                     <FormLabel >Size</FormLabel>

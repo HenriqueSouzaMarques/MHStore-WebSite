@@ -2,13 +2,11 @@ import React from 'react';
 
 import "../Produtos.css";
 
-import { produtos } from "../../../data/produtos.js";
-
 import Produto from "../../../components/Produto/Produto";
 
-const Shorts = () =>
+const Shorts = ( { catalogo, setCatalogo } ) =>
 {
-    const shorts = produtos.filter(produto => produto.tipo === "shorts");
+    const shorts = catalogo.filter(produto => produto.tipo === "shorts");
 
     return (
         <>
@@ -19,6 +17,7 @@ const Shorts = () =>
                 {shorts.map((shorts, index) => (
                     <Produto 
                         produto={shorts}
+                        setCatalogo={setCatalogo}
                         key={index}    
                     />
                 ))}

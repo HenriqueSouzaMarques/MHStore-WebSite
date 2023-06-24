@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { produtos } from "../../data/produtos.js"
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -10,9 +12,25 @@ import Tenis from "./Tenis/Tenis";
 
 import "./Produtos.css";
 import ProdutoSlider from "./Slider/ProdutoSlider";
+import { UserContext } from "../../UserContext.jsx";
+import BotaoCatalogoAdicionar from "./BotaoCatalogoAdicionar/BotaoCatalogoAdicionar.jsx";
 
 const Produtos = () =>
 {   
+    const { userData } = useContext(UserContext);
+
+    const [catalogo, setCatalogo] = useState(() => 
+    {
+        const catalogoAtual = localStorage.getItem('catalogo');
+
+        return (catalogoAtual ? JSON.parse(catalogoAtual) : produtos);
+    });
+
+    useEffect(() =>
+    {
+        localStorage.setItem('catalogo', JSON.stringify(catalogo))
+    }, [catalogo]);
+
     return (
         <>
             <Header />
@@ -23,13 +41,31 @@ const Produtos = () =>
 
                 <ProdutoSlider />
 
-                <Camisetas />
+                {
+                    (userData && userData.type === 'admin') &&
+                    
+                    <BotaoCatalogoAdicionar />
+                }
 
-                <Shorts />
+                <Camisetas 
+                    catalogo={catalogo}
+                    setCatalogo={setCatalogo}
+                />
 
-                <Calcas />
+                <Shorts 
+                    catalogo={catalogo}
+                    setCatalogo={setCatalogo}
+                />
 
-                <Tenis />
+                <Calcas 
+                    catalogo={catalogo}
+                    setCatalogo={setCatalogo}
+                />
+
+                <Tenis 
+                    catalogo={catalogo}
+                    setCatalogo={setCatalogo}
+                />
 
             </div>
 

@@ -34,18 +34,10 @@ const Menu = () =>
                     </li>
                 }
 
+                <li> <BotaoHeader link={"/products"} props={null}><CheckroomIcon /></BotaoHeader> </li>
 
                 {
-                    userData && userData.type === 'admin' ?
-                    <li> <BotaoHeader link={"/inventory"} props={null}><CheckroomIcon /></BotaoHeader> </li> :
-
-                    <li> <BotaoHeader link={"/products"} props={null}><CheckroomIcon /></BotaoHeader> </li>
-
-                }
-                
-
-                {
-                    userData && userData.type === 'cliente' && 
+                    userData && 
                     
                     <li> 
                         <BotaoHeader link={"/cart"} props={null}> 

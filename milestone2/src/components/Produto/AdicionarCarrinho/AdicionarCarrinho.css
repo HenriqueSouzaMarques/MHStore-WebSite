@@ -1,4 +1,4 @@
-.add-carrinho-container
+.pop-up-container
 {
     display: flex;
     position: fixed;
@@ -12,7 +12,7 @@
     z-index: 1;
 }
   
-.add-carrinho-conteudo-overlay
+.pop-up-conteudo-overlay
 {
     display: flex;
     flex-direction: column;

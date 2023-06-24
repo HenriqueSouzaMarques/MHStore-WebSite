@@ -47,3 +47,8 @@
 
     margin-bottom: 20px;
 }
+
+.botoes
+{
+    display: flex;
+}

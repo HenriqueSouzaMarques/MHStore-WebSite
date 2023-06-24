@@ -2,13 +2,11 @@ import React from 'react';
 
 import "../Produtos.css";
 
-import { produtos } from "../../../data/produtos.js";
-
 import Produto from "../../../components/Produto/Produto";
 
-const Tenis = () =>
+const Tenis = ( { catalogo, setCatalogo } ) =>
 {
-    const tenis = produtos.filter(produto => produto.tipo === "sneakers");
+    const tenis = catalogo.filter(produto => produto.tipo === "sneakers");
 
     return (
         <>
@@ -18,7 +16,8 @@ const Tenis = () =>
                 
                 {tenis.map((tenis, index) => (
                     <Produto 
-                        produto={tenis}z
+                        produto={tenis}
+                        setCatalogo={setCatalogo}
                         key={index}    
                     />
                 ))}
