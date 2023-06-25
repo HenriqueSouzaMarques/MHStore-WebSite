@@ -23,15 +23,43 @@ const Carrinho = () =>
 
     const navigate = useNavigate();
 
+    const updateStock = () =>
+    {
+        const catalogo = JSON.parse(localStorage.getItem('catalogo'));
+
+        (userData.cartProducts).forEach((product) => 
+        {
+            const index  = catalogo.findIndex((productCatalogo) => productCatalogo.id === product.id);
+
+            if(catalogo[index].estoque - product.quantidade > 0)
+            {
+                catalogo[index].estoque -= product.quantidade;
+            }
+            else
+            {
+                catalogo[index].estoque = 0;
+            }
+
+            localStorage.setItem('catalogo', JSON.stringify(catalogo));
+        })
+    }
+
+    const updateUser = () =>
+    {
+        let newData = {...userData, cartProducts: []};
+        newData = {...newData, totalProducts: 0};
+        newData = {...newData, purchaseAmount: 0};
+
+        updateUserData(newData);
+    }
+
     const finalizePurchase = ( buy ) =>
     {
         if(buy)
         {
-            let newData = {...userData, cartProducts: []};
-            newData = {...newData, totalProducts: 0};
-            newData = {...newData, purchaseAmount: 0};
+            updateStock();
 
-            updateUserData(newData);
+            updateUser();
             
             navigate('/');
             
