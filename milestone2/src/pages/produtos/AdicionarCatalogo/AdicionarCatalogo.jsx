@@ -139,11 +139,12 @@ const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <Button
                                 type="submit"
                                 variant="contained"
-                                startIcon={<AddCircleOutline />}
+                                endIcon={<AddCircleOutline />}
+                                fullWidth
                             >
                                 Add Product
                             </Button>
@@ -151,8 +152,8 @@ const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
 
                         <Grid item xs={6}>
                             <Button
-                                variant="outlined"
-                                startIcon={<Cancel />}
+                                variant="contained"
+                                endIcon={<Cancel />}
                                 onClick={handleCancel}
                                 fullWidth
                             >
