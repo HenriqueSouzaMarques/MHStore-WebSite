@@ -43,14 +43,7 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
         {
             updateUserData(user);
             
-            if(user.type === 'admin')
-            {
-                navigate("/");
-            }
-            else
-            {
-                navigate(-1);
-            }
+            navigate(-1);
         }
         else
         {

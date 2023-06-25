@@ -27,7 +27,8 @@ const ProdutoCarrinho = ( { index } ) =>
             }
             catch (error) 
             {
-                console.error('Erro ao carregar a imagem: ', error);
+                const imagem = await import('../../../assets/Produtos/not_found.png');
+                setImagem(imagem.default);
             }
         };
     

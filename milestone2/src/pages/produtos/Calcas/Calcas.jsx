@@ -6,7 +6,7 @@ import Produto from "../../../components/Produto/Produto"
 
 const Calcas = ( { catalogo, setCatalogo } ) =>
 {
-    const calcas = catalogo.filter(produto => produto.tipo === "pants");
+    const calcas = (catalogo).filter(produto => produto.tipo === "pants");
 
     return (
         <>

@@ -20,10 +20,11 @@ const StyledButton = styled(Button)`
     }
 `;
 
-const BotaoCatalogoAdicionar = () => 
+const BotaoCatalogoAdicionar = ( { adicionarProduto } ) => 
 {
     return (
         <StyledButton
+            onClick={() => adicionarProduto(true)}
             endIcon={<AddIcon />}
         >
             Add Product
