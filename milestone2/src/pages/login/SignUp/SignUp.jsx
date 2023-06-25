@@ -11,16 +11,19 @@ import UserInfo from './UserInfo/UserInfo';
 import Address from './Address/Address';
 import Phone from './Phone/Phone'
 
-import { users } from '../../../data/users.js'
+import { produtos } from '../../../data/produtos.js';
 
+import './SignUp.css';
 
-import './SignUp.css'
-
-const SignUp = ( { theme } ) => 
+const SignUp = ( { theme, setUsuarios } ) => 
 {
+    const { userData, updateUserData } = useContext(UserContext);
+
+    const usuarios = JSON.parse(localStorage.getItem('users'));
+
     const [newUserInfo, setNewUserInfo] = useState({
-        type: 'cliente',
-        id: '',
+        type: (userData && userData.type === 'admin') ? 'admin' : 'cliente',
+        id: usuarios[usuarios.length - 1].id + 1,
         email: '',
         username: '',
         password: '',
@@ -33,7 +36,8 @@ const SignUp = ( { theme } ) =>
         phone: '',
         cartProducts: [],
         totalProducts: 0,
-        purchaseAmount: 0
+        purchaseAmount: 0,
+        purchaseHistory: []
     })
 
     const handleEmailChange = (e) =>
@@ -81,16 +85,13 @@ const SignUp = ( { theme } ) =>
         setNewUserInfo({ ...newUserInfo, phone: e.target.value });
     };
 
-    
-    const { updateUserData } = useContext(UserContext);
-
-
     const navigate = useNavigate();
+
     const handleSubmit = (e) =>
     {
         e.preventDefault();
         
-        const alreadyUser = users.some((user) => user.email === newUserInfo.email)
+        const alreadyUser = usuarios.some((user) => user.email === newUserInfo.email)
 
         if (alreadyUser)
         {
@@ -98,13 +99,18 @@ const SignUp = ( { theme } ) =>
         }
         else
         {
-            const lastUser = users[users.length - 1]
+            const novoUser = {...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode};
+            updateUserData(novoUser);
 
-            setNewUserInfo({ ...newUserInfo, id: lastUser.id + 1});
+            usuarios.push(novoUser);
+            setUsuarios(usuarios);
     
-            updateUserData({...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode});
-    
-            users.push(newUserInfo);
+            const catalogo = localStorage.getItem('catalogo');
+
+            if(!catalogo)
+            {
+                localStorage.setItem('catalogo', JSON.stringify(produtos));
+            }
             
             navigate(-1);
         }
@@ -120,7 +126,7 @@ const SignUp = ( { theme } ) =>
                     {
                         padding: '2rem',
                         width: '700px', // Adjust the width as desired
-                        height: '490px', // Adjust the height as desired
+                        height: '550px', // Adjust the height as desired
                     }
                 }
             >

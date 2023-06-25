@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../components/Header/Header';
 
-const ControleUsuarios = () =>
+const Inventario = () =>
 {
     return (
         <>
@@ -10,4 +10,4 @@ const ControleUsuarios = () =>
     )
 }
 
-export default ControleUsuarios;
+export default Inventario;

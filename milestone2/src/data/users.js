@@ -2,7 +2,7 @@ export const users =
 [
     {
         type: 'cliente',
-        id: '0',
+        id: 0,
         email: 'cliente@cliente.com',
         username: 'Henrique Marques',
         password: '1234',
@@ -15,11 +15,12 @@ export const users =
         phone: '(19) 99999-9999',
         cartProducts: [],
         totalProducts: 0,
-        purchaseAmount: 0
+        purchaseAmount: 0,
+        purchaseHistory: []
     },
     {
         type: 'admin',
-        id: '1',
+        id: 1,
         email: 'admin@admin.com',
         username: 'Henrique Souza',
         password: '1234',
@@ -32,6 +33,7 @@ export const users =
         phone: '(19) 88888-8888',
         cartProducts: [],
         totalProducts: 0,
-        purchaseAmount: 0
+        purchaseAmount: 0,
+        purchaseHistory: []
     }
 ]

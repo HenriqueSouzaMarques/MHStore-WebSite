@@ -41,29 +41,52 @@ const Carrinho = () =>
             }
 
             localStorage.setItem('catalogo', JSON.stringify(catalogo));
-        })
+        });
     }
 
-    const updateUser = () =>
+    const updateUsers = ( newData ) =>
     {
-        let newData = {...userData, cartProducts: []};
+        const users = JSON.parse(localStorage.getItem('users'));
+
+        const userIndex = users.findIndex((user) => user.id === userData.id);
+
+        users[userIndex] = newData;
+        
+        localStorage.setItem('users', JSON.stringify(users)); 
+    }
+
+    const updateUser = ( totalPurchase, creditCard ) =>
+    {
+        
+        const compra = {};
+        compra["produtos"] = userData.cartProducts;
+        compra["total"] = totalPurchase;
+        compra["cartao"] = creditCard;
+
+        const historico = userData.purchaseHistory;
+        historico.push(compra)
+
+        let newData = {...userData, cartProducts: [], purchaseHistory: historico};
         newData = {...newData, totalProducts: 0};
         newData = {...newData, purchaseAmount: 0};
 
+        updateUsers(newData);
         updateUserData(newData);
     }
 
-    const finalizePurchase = ( buy ) =>
+
+    const finalizePurchase = ( buy, totalPurchase, creditCard ) =>
     {
         if(buy)
         {
+            alert("Purchase completed successfully!");
+
             updateStock();
 
-            updateUser();
+            updateUser(totalPurchase, creditCard);
             
             navigate('/');
             
-            alert("Purchase completed successfully!");
         }
         else
         {
@@ -84,7 +107,9 @@ const Carrinho = () =>
                 }
             );
 
-            let newData = {...userData, totalProducts: quantidadeTotal}
+            let newData = {...userData, totalProducts: quantidadeTotal};
+
+            updateUsers(newData);
             updateUserData(newData);
         }
 
@@ -104,6 +129,7 @@ const Carrinho = () =>
 
             let newData = {...userData, purchaseAmount: valorTotal}
             
+            updateUsers(newData);
             updateUserData(newData);
         }
 

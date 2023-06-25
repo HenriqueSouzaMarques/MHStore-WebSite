@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../../../UserContext';
 
-import { users } from '../../../data/users.js'
+import { produtos } from '../../../data/produtos.js';
 
-const LoginForm = ( { theme, setCreateAccount, type } ) =>
+const LoginForm = ( { theme, setCreateAccount, usuarios } ) =>
 {
     
     const { updateUserData } = useContext(UserContext);
@@ -34,7 +34,7 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
     {
         e.preventDefault(); 
 
-        const user = users.find
+        const user = usuarios.find
         (
             (user) => user.email === email && user.password === password
         )
@@ -42,6 +42,13 @@ const LoginForm = ( { theme, setCreateAccount, type } ) =>
         if(user)
         {
             updateUserData(user);
+
+            const catalogo = localStorage.getItem('catalogo');
+
+            if(!catalogo)
+            {
+                localStorage.setItem('catalogo', JSON.stringify(produtos));
+            }
             
             navigate(-1);
         }

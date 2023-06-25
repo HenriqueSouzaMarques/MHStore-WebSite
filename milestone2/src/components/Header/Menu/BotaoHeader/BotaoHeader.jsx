@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { IconButton } from "@mui/material";
 
-import './BotaoHeader.css'
+import './BotaoHeader.css';
 
 const BotaoHeader = ( {children, link, props} ) =>
 {

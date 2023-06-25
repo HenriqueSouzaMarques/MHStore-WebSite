@@ -28,21 +28,24 @@ const Produtos = () =>
     const [ temTenis, setTemTenis ] = useState(true);
 
 
-    const [catalogo, setCatalogo] = useState(() => 
+    const [ catalogo, setCatalogo ] = useState(() => 
     {
         const catalogoAtual = localStorage.getItem('catalogo');
 
-        return (catalogoAtual ? JSON.parse(catalogoAtual) : produtos);
+        return (catalogoAtual ? (JSON.parse(catalogoAtual)) : produtos);
     });
 
     useEffect(() =>
     {
-        localStorage.setItem('catalogo', JSON.stringify(catalogo));
-
-        setTemCamiseta(catalogo.findIndex((produto) => produto.tipo === 't-shirt' && produto.estoque !== 0) !== -1 ? true : false);
-        setTemShorts(catalogo.findIndex((produto) => produto.tipo === 'shorts' && produto.estoque !== 0) !== -1 ? true : false);
-        setTemCalca(catalogo.findIndex((produto) => produto.tipo === 'pants' && produto.estoque !== 0) !== -1 ? true : false); 
-        setTemTenis(catalogo.findIndex((produto) => produto.tipo === 'sneakers' && produto.estoque !== 0) !== -1 ? true : false);
+        if(catalogo)
+        {
+            localStorage.setItem('catalogo', JSON.stringify(catalogo));
+    
+            setTemCamiseta(catalogo.findIndex((produto) => produto.tipo === 't-shirt' && produto.estoque !== 0) !== -1 ? true : false);
+            setTemShorts(catalogo.findIndex((produto) => produto.tipo === 'shorts' && produto.estoque !== 0) !== -1 ? true : false);
+            setTemCalca(catalogo.findIndex((produto) => produto.tipo === 'pants' && produto.estoque !== 0) !== -1 ? true : false); 
+            setTemTenis(catalogo.findIndex((produto) => produto.tipo === 'sneakers' && produto.estoque !== 0) !== -1 ? true : false);
+        }
 
     }, [catalogo]);
 
@@ -114,8 +117,6 @@ const Produtos = () =>
 
             <Footer />
         </>
-
-
     )
 };
 

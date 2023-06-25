@@ -6,7 +6,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HomeIcon from '@mui/icons-material/Home';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
-import PeopleIcon from '@mui/icons-material/People';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import LoginIcon from '@mui/icons-material/Login';
 
 import './Menu.css'
@@ -28,8 +28,8 @@ const Menu = () =>
                 {
                     userData && userData.type === 'admin' && 
                     <li> 
-                        <BotaoHeader link={"/users"} props={null}> 
-                            <PeopleIcon />
+                        <BotaoHeader link={"/inventory"} props={null}> 
+                            <InventoryIcon />
                         </BotaoHeader>
                     </li>
                 }

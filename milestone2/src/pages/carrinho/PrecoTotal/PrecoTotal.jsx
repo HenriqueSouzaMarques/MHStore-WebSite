@@ -23,12 +23,12 @@ const PrecoTotal = ( { handleIsBlurred, handleFinalizePurchase } ) =>
         setFinalizePurchase(true);
     };
 
-    const closeFinalize = ( buy ) =>
+    const closeFinalize = ( buy, total, creditCard ) =>
     {
         setIsBlurred(false);
         setFinalizePurchase(false);
 
-        handleFinalizePurchase(buy);
+        handleFinalizePurchase(buy, total, creditCard);
     }
 
     return (

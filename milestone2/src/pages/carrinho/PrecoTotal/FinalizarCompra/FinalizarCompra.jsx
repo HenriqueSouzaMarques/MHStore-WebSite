@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import { Button, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
@@ -19,14 +19,14 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 {
     const { userData, updateUserData } = useContext(UserContext);
 
-    const [total, setTotal] = useState(userData.purchaseAmount);
+    const [ total, setTotal ] = useState(userData.purchaseAmount);
 
-    const [address, setAddress] = useState(userData.fullAddress);
-    const [creditCard, setCreditCart] = useState('');
+    const [ address, setAddress ] = useState(userData.fullAddress);
+    const [ creditCard, setCreditCart ] = useState('');
 
-    const [isEditing, setIsEditing] = useState(false);
+    const [ isEditing, setIsEditing ] = useState(false);
 
-    const [discountCoupon, setDiscountCoupon] = useState('');
+    const [ discountCoupon, setDiscountCoupon ] = useState('');
     const [ discount, setDiscount ] = useState(0);
 
     const [isValidCoupon, setIsValidCoupon] = useState(false);
@@ -66,7 +66,7 @@ const FinalizarCompra = ( { closeFinalize } ) =>
         }
         else
         {
-            closeFinalize(true);
+            closeFinalize(true, total, creditCard);
         }
     }
 
@@ -77,35 +77,26 @@ const FinalizarCompra = ( { closeFinalize } ) =>
             handleDisableCoupon();
         }
 
-        closeFinalize(false)
+        closeFinalize(false, 0, '')
     }
 
     const handleApplyCoupon = () =>
     {
-        const cupom = cupons.find
-        (
-            (cupom) => cupom.nome === discountCoupon
-        )
-
         if(discountCoupon)
         {
             const cupom = cupons.find
             (
                 (cupom) => cupom.nome === discountCoupon
-            )
-
+            );
+            
             if(cupom)
             {
-                setDiscount(userData.purchaseAmount / (100 / cupom.desconto));
+                setDiscount(total / (100 / cupom.desconto));
     
-                const novoTotal = userData.purchaseAmount - (userData.purchaseAmount / (100 / cupom.desconto));
-    
+                const novoTotal = total - (total / (100 / cupom.desconto));                
+                
                 setTotal(novoTotal);
-    
-                const novosDados = {...userData, purchaseAmount: novoTotal};
-    
-                updateUserData(novosDados);
-    
+
                 setIsValidCoupon(true);
             }
             else
@@ -118,14 +109,9 @@ const FinalizarCompra = ( { closeFinalize } ) =>
     const handleDisableCoupon = () =>
     {
         const novoTotal = total + discount;
-
         setTotal(novoTotal);
 
         setDiscount(0);
-
-        const novosDados = {...userData, purchaseAmount: novoTotal};
-
-        updateUserData(novosDados);
 
         setDiscountCoupon('');
         setIsValidCoupon(false);

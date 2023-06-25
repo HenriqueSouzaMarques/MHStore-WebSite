@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { createTheme } from '@mui/material/styles';
 
-
-import { useLocation } from 'react-router-dom';
+import { users } from "../../data/users.js";
 
 import Logo from '../../components/Header/Logo/Logo'
 import LoginForm from "./LoginForm/LoginForm";
 
 import './Login.css'
 import SignUp from './SignUp/SignUp';
+import { UserContext } from '../../UserContext';
 
 const Login = () =>
 {   
-    const location = useLocation();
-    const { type } = location.state;
-
     const [createAccount, setCreateAccount] = useState(false);
+
+    const { userData } = useContext(UserContext);
+
+    const [ usuarios, setUsuarios ] = useState(() => 
+    {
+        const usuarios = localStorage.getItem('users');
+
+        return (usuarios ? JSON.parse(usuarios) : users);
+    });
+
+    useEffect(() =>
+    {
+        localStorage.setItem('users', JSON.stringify(usuarios));
+    }, [usuarios]);
 
     const theme = createTheme(
     {
@@ -44,21 +55,21 @@ const Login = () =>
             <div className="form-container">
 
                 {
-                    (createAccount || type === 'admin') ? 
+                    (createAccount || (userData && userData.type === 'admin')) ? 
                         <SignUp 
                             theme={theme}   
-                            type={type}
+                            userData={userData}
+                            setUsuarios={setUsuarios}
                         />
                     :
                         <LoginForm 
                             theme={theme}
                             setCreateAccount={setCreateAccount}
-                            type={type}
+                            usuarios={usuarios}
                         /> 
                 }
                 
             </div>
-
         </div>
     )
 }
