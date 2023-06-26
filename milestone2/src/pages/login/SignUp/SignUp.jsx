@@ -15,7 +15,7 @@ import { produtos } from '../../../data/produtos.js';
 
 import './SignUp.css';
 
-const SignUp = ( { theme, setUsuarios } ) => 
+const SignUp = ( { theme } ) => 
 {
     const { userData, updateUserData } = useContext(UserContext);
 
@@ -100,10 +100,10 @@ const SignUp = ( { theme, setUsuarios } ) =>
         else
         {
             const novoUser = {...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode};
-            updateUserData(novoUser);
 
             usuarios.push(novoUser);
-            setUsuarios(usuarios);
+            
+            localStorage.setItem('users', JSON.stringify(usuarios));
     
             const catalogo = localStorage.getItem('catalogo');
 
@@ -111,8 +111,17 @@ const SignUp = ( { theme, setUsuarios } ) =>
             {
                 localStorage.setItem('catalogo', JSON.stringify(produtos));
             }
+
+            if(!userData)
+            {
+                updateUserData(novoUser);
+                navigate(-1);
+            }
+            else
+            {
+                navigate('/users');
+            }
             
-            navigate(-1);
         }
         
     }

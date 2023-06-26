@@ -4,7 +4,7 @@ import Home from './pages/home-page/Home';
 import Produtos from './pages/produtos/Produtos';
 import Carrinho from './pages/carrinho/Carrinho';
 import Login from './pages/login/Login';
-import Inventario from './pages/inventario/Inventario';
+import Usuarios from './pages/usuarios/Usuarios';
 
 import { UserProvider } from './UserContext';
 
@@ -24,7 +24,7 @@ const App = () =>
 
                 <Route path='/login' element={<Login />} />
 
-                <Route path='/inventory' element={<Inventario />} /> 
+                <Route path='/users' element={<Usuarios />} /> 
 
             </Routes>
         </UserProvider>

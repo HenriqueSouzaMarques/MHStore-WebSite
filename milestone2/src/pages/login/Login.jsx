@@ -59,7 +59,6 @@ const Login = () =>
                         <SignUp 
                             theme={theme}   
                             userData={userData}
-                            setUsuarios={setUsuarios}
                         />
                     :
                         <LoginForm 

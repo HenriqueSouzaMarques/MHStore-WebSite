@@ -41,16 +41,16 @@ const LoginForm = ( { theme, setCreateAccount, usuarios } ) =>
 
         if(user)
         {
-            updateUserData(user);
-
             const catalogo = localStorage.getItem('catalogo');
-
+            
             if(!catalogo)
             {
                 localStorage.setItem('catalogo', JSON.stringify(produtos));
             }
             
             navigate(-1);
+            
+            updateUserData(user);
         }
         else
         {
