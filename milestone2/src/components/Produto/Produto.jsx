@@ -74,8 +74,10 @@ const Produto = ( { produto, setCatalogo } ) =>
 
     useEffect(() =>
     {
+        if(!userData) return;
+        
         let users = JSON.parse(localStorage.getItem('users'));
-
+        
         users = users.map((user) =>
         {
             const [ newCart, novoTotal ] = updateEditarCarrinho(user);
