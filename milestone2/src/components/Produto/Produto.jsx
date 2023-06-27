@@ -88,7 +88,7 @@ const Produto = ( { produto, setCatalogo } ) =>
                 novoPreco += (produto.preco * produto.quantidade);
             })
 
-            if(user.id == userData.id)
+            if(user.id === userData.id)
             {
                 const newUserData = 
                 {
