@@ -47,7 +47,7 @@ const EditarProduto = ( { product, closePopUp } ) =>
                 nome: nome,
                 marca: marca,
                 preco: parseFloat(preco),
-                estoque: parseFloat(estoque)
+                estoque: parseInt(estoque)
             }
     
             closePopUp(true, newProduct);

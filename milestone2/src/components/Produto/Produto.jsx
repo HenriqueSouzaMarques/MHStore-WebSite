@@ -40,73 +40,91 @@ const Produto = ( { produto, setCatalogo } ) =>
         importarImagem();
     }, [imagem]);
 
-    const updateUsers = ( newData ) =>
+    const updateEditarCarrinho = ( user ) =>
     {
-        const users = JSON.parse(localStorage.getItem('users'));
+        let novoTotal = user.totalProducts;
 
-        const userIndex = users.findIndex((user) => user.id === userData.id);
+        const newCart = (user.cartProducts).map((product) =>
+        {
+            if(product.id === produtoAtual.id)
+            {
+                let novaQuantidade = product.quantidade;
 
-        users[userIndex] = newData;
+                if(novaQuantidade > produtoAtual.estoque)
+                {
+                    novoTotal -= (novaQuantidade - produtoAtual.estoque)
+
+                    novaQuantidade = produtoAtual.estoque;
+                }
+
+                return { 
+                    ...product, 
+                    nome: produtoAtual.nome,
+                    estoque: produtoAtual.estoque, 
+                    preco: produtoAtual.preco, 
+                    quantidade: novaQuantidade 
+                };
+            }
+
+            return product;
+        });
         
-        localStorage.setItem('users', JSON.stringify(users)); 
+        return [ newCart, novoTotal ];
     }
 
     useEffect(() =>
     {
-        if(userData)
+        let users = JSON.parse(localStorage.getItem('users'));
+
+        users = users.map((user) =>
         {
-            let novoTotal = userData.totalProducts;
-    
-            const newCart = (userData.cartProducts).map((product) =>
-            {
-                if(product.id === produtoAtual.id)
-                {
-                    let novaQuantidade = product.quantidade;
-    
-                    if(novaQuantidade > produtoAtual.estoque)
-                    {
-                        novoTotal -= (novaQuantidade - produtoAtual.estoque)
-    
-                        novaQuantidade = produtoAtual.estoque;
-                    }
-    
-                    return { 
-                        ...product, 
-                        nome: produtoAtual.nome,
-                        estoque: produtoAtual.estoque, 
-                        preco: produtoAtual.preco, 
-                        quantidade: novaQuantidade 
-                    };
-                }
-    
-                return product;
-            });
-    
+            const [ newCart, novoTotal ] = updateEditarCarrinho(user);
+
             let novoPreco = 0;
             newCart.forEach((produto) => 
             {
                 novoPreco += (produto.preco * produto.quantidade);
             })
 
-            const newUserData = {...userData, cartProducts: newCart, totalProducts: novoTotal, purchaseAmount: novoPreco};
-
-            let catalogo = JSON.parse(localStorage.getItem('catalogo'));
-
-            catalogo = catalogo.map((product) =>
+            if(user.id == userData.id)
             {
-                if(product.id === produtoAtual.id)
+                const newUserData = 
                 {
-                    return produtoAtual;
-                }
+                    ...userData, 
+                    cartProducts: newCart, 
+                    totalProducts: novoTotal, 
+                    purchaseAmount: novoPreco
+                };
 
-                return product;
-            })
-            
-            updateUsers(newUserData);
-            updateUserData(newUserData);
+                updateUserData(newUserData);
+            }
 
-            setCatalogo(catalogo);
-        }
+            user = 
+            {
+                ...user, 
+                cartProducts: newCart, 
+                totalProducts: novoTotal, 
+                purchaseAmount: novoPreco
+            };
+
+            return user;
+        });
+
+        localStorage.setItem('users', JSON.stringify(users));
+
+        let catalogo = JSON.parse(localStorage.getItem('catalogo'));
+
+        catalogo = catalogo.map((product) =>
+        {
+            if(product.id === produtoAtual.id)
+            {
+                return produtoAtual;
+            }
+
+            return product;
+        })
+
+        setCatalogo(catalogo);
 
     }, [produtoAtual])
 
@@ -123,27 +141,51 @@ const Produto = ( { produto, setCatalogo } ) =>
 
             return product;
         })
-        
         setCatalogo(catalogo);
 
-        let novoTotal = userData.totalProducts;
-        let novoPreco = userData.purchaseAmount;
+        let users = JSON.parse(localStorage.getItem('users'));
 
-        (userData.cartProducts).forEach(element =>
+        users = users.map((user) => 
         {
-            if(element.id === produtoAtual.id)
+            let novoTotal = user.totalProducts;
+            let novoPreco = user.purchaseAmount;
+
+            (user.cartProducts).forEach((product) =>
             {
-                novoTotal -= element.quantidade;
-                novoPreco -= (element.quantidade * element.preco)
-            } 
-        });
+                if(product.id === produtoAtual.id)
+                {
+                    novoTotal -= product.quantidade;
+                    novoPreco -= (product.quantidade * product.preco)
+                } 
+            })
 
-        const newCart = (userData.cartProducts).filter((product) => (product.id !== produtoAtual.id));
+            const newCart = (user.cartProducts).filter((product) => (product.id !== produtoAtual.id));
 
-        const newUserData = {...userData, cartProducts: newCart, totalProducts: novoTotal, purchaseAmount: novoPreco};
+            if(user.id === userData.id)
+            {
+                const newUserData = 
+                {
+                    ...userData, 
+                    cartProducts: newCart, 
+                    totalProducts: novoTotal, 
+                    purchaseAmount: novoPreco
+                };
         
-        updateUsers(newUserData);
-        updateUserData(newUserData);
+                updateUserData(newUserData);
+            }
+
+            user = 
+            {
+                ...user, 
+                cartProducts: newCart, 
+                totalProducts: novoTotal, 
+                purchaseAmount: novoPreco
+            };
+
+            return user;
+        })
+
+        localStorage.setItem('users', JSON.stringify(users));
     };
 
     const addProduct = (product, quantity) =>
@@ -196,9 +238,20 @@ const Produto = ( { produto, setCatalogo } ) =>
             newData = {...newData, purchaseAmount: (newData.purchaseAmount) += (quantity * produtoAtual.preco)}
         }
 
-        updateUsers(newData);
+        updateUser(newData);
 
         updateUserData(newData); 
+    }
+
+    const updateUser = ( newData ) =>
+    {
+        const users = JSON.parse(localStorage.getItem('users'));
+
+        const userIndex = users.findIndex((user) => user.id === userData.id);
+
+        users[userIndex] = newData;
+        
+        localStorage.setItem('users', JSON.stringify(users)); 
     }
 
     const closeAddPopUp = (size, quantidade, buy) =>
