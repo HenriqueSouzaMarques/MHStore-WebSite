@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { createTheme } from '@mui/material/styles';
 
-import { users } from "../../data/users.js";
+import { users } from "../../server/data/users.js";
 
 import Logo from '../../components/Header/Logo/Logo'
 import LoginForm from "./LoginForm/LoginForm";

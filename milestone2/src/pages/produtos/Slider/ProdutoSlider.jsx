@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -33,15 +33,6 @@ const icons =
 const ProdutoSlider = () =>
 {
   const handleDragStart = (e) => e.preventDefault();
-
-  const settings =
-  {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-  };
 
     return (
       <AliceCarousel

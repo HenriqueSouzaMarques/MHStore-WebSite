@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../../../UserContext';
 
-import { produtos } from '../../../data/produtos.js';
+import { produtos } from '../../../server/data/produtos.js';
 
 const LoginForm = ( { theme, setCreateAccount, usuarios } ) =>
 {

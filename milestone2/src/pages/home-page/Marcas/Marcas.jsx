@@ -2,7 +2,7 @@ import React from "react";
 
 import Marca from "./Marca/Marca"
 
-import { marcas } from "../../../data/marcas.js"
+import { marcas } from "../../../server/data/marcas.js"
 
 const Marcas = () =>
 {

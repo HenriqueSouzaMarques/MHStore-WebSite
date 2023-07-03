@@ -12,7 +12,7 @@ import BotaoRemover from './BotaoRemover/BotaoRemover';
 import AdicionarCarrinho from './AdicionarCarrinho/AdicionarCarrinho';
 import EditarProduto from './EditarProduto/EditarProduto';
 
-const Produto = ( { produto, setCatalogo } ) =>
+const Produto = ( { produto, updateProduto } ) =>
 {
     const { userData, updateUserData } = useContext(UserContext);
 
@@ -114,36 +114,13 @@ const Produto = ( { produto, setCatalogo } ) =>
 
         localStorage.setItem('users', JSON.stringify(users));
 
-        let catalogo = JSON.parse(localStorage.getItem('catalogo'));
-
-        catalogo = catalogo.map((product) =>
-        {
-            if(product.id === produtoAtual.id)
-            {
-                return produtoAtual;
-            }
-
-            return product;
-        })
-
-        setCatalogo(catalogo);
+        updateProduto(produtoAtual);
 
     }, [produtoAtual])
 
     const removeProduct = () =>
     {
-        let catalogo = JSON.parse(localStorage.getItem('catalogo'));
-
-        catalogo = catalogo.map((product) =>
-        {
-            if(product.id === produtoAtual.id)
-            {
-                return {...product, estoque: 0}
-            }
-
-            return product;
-        })
-        setCatalogo(catalogo);
+        updateProduto({...produtoAtual, estoque: 0});
 
         let users = JSON.parse(localStorage.getItem('users'));
 
@@ -336,6 +313,5 @@ const Produto = ( { produto, setCatalogo } ) =>
         </>
     )
 }
-
 
 export default Produto;

@@ -4,7 +4,7 @@ import "../Produtos.css";
 
 import Produto from "../../../components/Produto/Produto";
 
-const Shorts = ( { catalogo, setCatalogo } ) =>
+const Shorts = ( { catalogo, updateProduto } ) =>
 {
     const shorts = catalogo.filter(produto => produto.tipo === "shorts");
 
@@ -17,7 +17,7 @@ const Shorts = ( { catalogo, setCatalogo } ) =>
                 {shorts.map((shorts, index) => (
                     <Produto 
                         produto={shorts}
-                        setCatalogo={setCatalogo}
+                        updateProduto={updateProduto}
                         key={index}    
                     />
                 ))}

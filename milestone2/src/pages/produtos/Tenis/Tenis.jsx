@@ -4,7 +4,7 @@ import "../Produtos.css";
 
 import Produto from "../../../components/Produto/Produto";
 
-const Tenis = ( { catalogo, setCatalogo } ) =>
+const Tenis = ( { catalogo, updateProduto } ) =>
 {
     const tenis = catalogo.filter(produto => produto.tipo === "sneakers");
 
@@ -17,7 +17,7 @@ const Tenis = ( { catalogo, setCatalogo } ) =>
                 {tenis.map((tenis, index) => (
                     <Produto 
                         produto={tenis}
-                        setCatalogo={setCatalogo}
+                        updateProduto={updateProduto}
                         key={index}    
                     />
                 ))}

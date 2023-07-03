@@ -11,7 +11,7 @@ import UserInfo from './UserInfo/UserInfo';
 import Address from './Address/Address';
 import Phone from './Phone/Phone'
 
-import { produtos } from '../../../data/produtos.js';
+import { produtos } from '../../../server/data/produtos.js';
 
 import './SignUp.css';
 

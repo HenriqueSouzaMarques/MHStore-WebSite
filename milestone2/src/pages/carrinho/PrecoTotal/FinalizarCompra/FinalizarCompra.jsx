@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import { Button, IconButton } from '@mui/material';
 import { TextField } from '@mui/material';
@@ -11,13 +11,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { UserContext } from "../../../../UserContext";
 
-import { cupons } from "../../../../data/cupons.js"
+import { cupons } from "../../../../server/data/cupons.js"
 
 import './FinalizarCompra.css'
 
 const FinalizarCompra = ( { closeFinalize } ) =>
 {
-    const { userData, updateUserData } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
 
     const [ total, setTotal ] = useState(userData.purchaseAmount);
 

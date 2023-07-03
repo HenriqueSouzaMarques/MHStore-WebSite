@@ -4,7 +4,7 @@ import "../Produtos.css";
 
 import Produto from "../../../components/Produto/Produto"
 
-const Calcas = ( { catalogo, setCatalogo } ) =>
+const Calcas = ( { catalogo, updateProduto } ) =>
 {
     const calcas = (catalogo).filter(produto => produto.tipo === "pants");
 
@@ -17,7 +17,7 @@ const Calcas = ( { catalogo, setCatalogo } ) =>
                 {calcas.map((calca, index) => (
                     <Produto 
                         produto={calca}
-                        setCatalogo={setCatalogo}
+                        updateProduto={updateProduto}
                         key={index}    
                     />
                 ))}
