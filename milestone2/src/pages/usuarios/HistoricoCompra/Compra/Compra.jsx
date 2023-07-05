@@ -4,7 +4,7 @@ import ProdutoComprado from './ProdutoComprado/ProdutoComprado';
 
 const Compra = ({ compra }) => {
   const { produtos, total } = compra;
-
+  
   return (
     <Box sx={{ marginBottom: '16px' }}>
       <Paper sx={{ p: 3, borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>

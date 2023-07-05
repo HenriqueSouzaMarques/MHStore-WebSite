@@ -42,9 +42,10 @@ const AdicionarCatalogo = ( { catalogo, fetchCatalogo, setCatalogo, setAdicionar
         
         await addProduct(produtoFinalizado);
 
-        const novoCatalogo = [...catalogo, { produtoFinalizado }];
-
-        setCatalogo(novoCatalogo);
+        setCatalogo((prevCatalogo) =>
+        {
+            return [...prevCatalogo, { produtoFinalizado }]
+        });
 
         setAdicionarProduto(false);  
         

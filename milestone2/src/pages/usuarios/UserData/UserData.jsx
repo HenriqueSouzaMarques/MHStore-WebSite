@@ -84,14 +84,15 @@ const UserData = ({ user, setHistory }) =>
       fullAddress
     };
 
-    await updateUser(updatedUser);
-
-    if(updateUser._id === userData._id)
+    if(updatedUser._id === userData._id)
     {
       updateUserData(updatedUser);
 
       if(updatedUser.type === 'cliente') navigate('/');
     }
+
+    await updateUser(updatedUser);
+
   };
 
   const handleOpenPopUp = () =>

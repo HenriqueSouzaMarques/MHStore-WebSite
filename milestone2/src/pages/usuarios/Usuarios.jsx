@@ -15,7 +15,7 @@ const Usuarios = () =>
     const { fetchUsers } = useContext(UserContext);
 
     const [ compras, setCompras ] = useState(null);
-    const [ users, setUsers ] = useState(null);
+    const [ users, setUsers ] = useState([]);
 
     useEffect(() =>
     {

@@ -11,7 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { UserContext } from "../../../../UserContext";
 
-import { cupons } from "../../../../server/data/cupons.js"
+import { cupons } from "../../../../data/cupons.js"
 
 import './FinalizarCompra.css'
 

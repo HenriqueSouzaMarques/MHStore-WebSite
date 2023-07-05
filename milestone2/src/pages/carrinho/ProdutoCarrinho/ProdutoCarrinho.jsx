@@ -9,7 +9,7 @@ import { UserContext } from '../../../UserContext';
 import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-import './ProdutoCarrinho.css'
+import './ProdutoCarrinho.css';
 
 
 const loadImage = async (imageUrl, fallbackImageUrl) =>
