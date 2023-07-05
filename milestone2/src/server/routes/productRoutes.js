@@ -1,5 +1,7 @@
+"use strict";
+
 import express from 'express';
-import Produto from '../models/produto_schema.js';
+import Produto from '../models/produtoSchema.js';
 
 const router = express.Router();
 
@@ -19,9 +21,10 @@ router.get('/:id', async (req, res) =>
 {
     const idReq = req.params.id;
 
-    try {
-        const produtos = await Produto.findOne( { id: idReq } );
-        res.json(produtos);
+    try
+    {
+        const produto = await Produto.findById(idReq);
+        res.json(produto);
     } 
     catch (error)
     {
@@ -43,15 +46,15 @@ router.post('/', async (req, res) =>
     }
 });
 
-router.put('/:id', async (req, res) =>
+router.put('/', async (req, res) =>
 {
-    const idReq = req.params.id;
-
     const product = req.body;
+
+    const idReq = product._id;
 
     try
     {
-        await Produto.findOneAndUpdate( { id: idReq },
+        const updatedProduct = await Produto.findByIdAndUpdate(idReq,
         {
             $set:
             {
@@ -63,9 +66,9 @@ router.put('/:id', async (req, res) =>
                 preco: product.preco,
                 id: product.id
             }   
-        });
+        }, { new: true });
 
-        res.status(201).json(product);
+        res.status(201).json(updatedProduct);
     }
     catch (error)
     {

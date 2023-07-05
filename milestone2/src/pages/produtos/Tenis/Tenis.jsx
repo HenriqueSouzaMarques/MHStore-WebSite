@@ -14,9 +14,9 @@ const Tenis = ( { catalogo, updateProduto } ) =>
         
             <div className="tenis-container">
                 
-                {tenis.map((tenis, index) => (
+                {tenis.map((product, index) => (
                     <Produto 
-                        produto={tenis}
+                        produto={product}
                         updateProduto={updateProduto}
                         key={index}    
                     />

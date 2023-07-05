@@ -14,9 +14,9 @@ const Camisetas = ( { catalogo, updateProduto } ) =>
             <h3 id="t-shirt"> T-Shirts </h3>
             <div className="camisetas-container">
                 
-                {camisetas.map((camiseta, index) => (
+                {camisetas.map((product, index) => (
                     <Produto 
-                        produto={camiseta}
+                        produto={product}
                         updateProduto={updateProduto}
                         key={index}    
                     />

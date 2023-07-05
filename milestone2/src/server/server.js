@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors'
 
 import productRouter from './routes/productRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 app.use(bodyParser.json());
@@ -36,6 +37,7 @@ mongoose
     });
 
 app.use('/products', productRouter);
+app.use('/users', userRouter);
 
 // Start the server
 app.listen(PORT, () => 

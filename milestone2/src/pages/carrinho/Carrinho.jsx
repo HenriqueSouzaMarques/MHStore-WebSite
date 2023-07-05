@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import ProdutoCarrinho from "./ProdutoCarrinho/ProdutoCarrinho";
 import Header from "../../components/Header/Header";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Carrinho = () =>
 {
-    const { userData, updateUserData } = useContext(UserContext);
+    const { userData, updateUserData, fetchProduto, updateProduct, updateUser } = useContext(UserContext);
 
     const [isBlurred, setIsBlurred] = useState(false);
 
@@ -23,41 +23,28 @@ const Carrinho = () =>
 
     const navigate = useNavigate();
 
-    const updateStock = () =>
+    const updateStock = async () =>
     {
-        const catalogo = JSON.parse(localStorage.getItem('catalogo'));
-
-        (userData.cartProducts).forEach((product) => 
-        {
-            const index  = catalogo.findIndex((productCatalogo) => productCatalogo.id === product.id);
-
-            if(catalogo[index].estoque - product.quantidade > 0)
+        for (const product of userData.cartProducts)
+        {            
+            const produto = await fetchProduto(product.id);
+                  
+            const updatedProduct = { ...produto }; // Assuming `produto` is the retrieved product
+            if (updatedProduct.estoque - product.quantidade > 0)
             {
-                catalogo[index].estoque -= product.quantidade;
-            }
-            else
+                updatedProduct.estoque -= product.quantidade;
+            } 
+            else 
             {
-                catalogo[index].estoque = 0;
+                updatedProduct.estoque = 0;
             }
+      
+            await updateProduct(updatedProduct);
+        }
+    };
 
-            localStorage.setItem('catalogo', JSON.stringify(catalogo));
-        });
-    }
-
-    const updateUsers = ( newData ) =>
+    const updateUsuario = async ( totalPurchase, creditCard ) =>
     {
-        const users = JSON.parse(localStorage.getItem('users'));
-
-        const userIndex = users.findIndex((user) => user.id === userData.id);
-
-        users[userIndex] = newData;
-        
-        localStorage.setItem('users', JSON.stringify(users)); 
-    }
-
-    const updateUser = ( totalPurchase, creditCard ) =>
-    {
-        
         const compra = {};
         compra["produtos"] = userData.cartProducts;
         compra["total"] = totalPurchase;
@@ -70,7 +57,7 @@ const Carrinho = () =>
         newData = {...newData, totalProducts: 0};
         newData = {...newData, purchaseAmount: 0};
 
-        updateUsers(newData);
+        await updateUser(newData);
         updateUserData(newData);
     }
 
@@ -83,7 +70,7 @@ const Carrinho = () =>
 
             updateStock();
 
-            updateUser(totalPurchase, creditCard);
+            updateUsuario(totalPurchase, creditCard);
             
             navigate('/');
             
@@ -95,46 +82,6 @@ const Carrinho = () =>
 
     }
 
-    useEffect(() => 
-    {
-        let quantidadeTotal = 0;
-
-        if(userData !== null)
-        {
-            (userData.cartProducts).forEach(element => 
-                {
-                    quantidadeTotal += (element.quantidade);
-                }
-            );
-
-            let newData = {...userData, totalProducts: quantidadeTotal};
-
-            updateUsers(newData);
-            updateUserData(newData);
-        }
-
-
-    }, [userData])
-
-    useEffect(() =>
-    {
-        let valorTotal = 0
-
-        if(userData !== null)
-        {
-            (userData.cartProducts).forEach(element => 
-            {
-                valorTotal += (element.quantidade) * (element.preco);
-            });
-
-            let newData = {...userData, purchaseAmount: valorTotal}
-            
-            updateUsers(newData);
-            updateUserData(newData);
-        }
-
-
-    }, [userData])
 
     return (
         <>
@@ -155,7 +102,7 @@ const Carrinho = () =>
                                 (userData.cartProducts).map((produto, index) =>
                                 (
                                     <ProdutoCarrinho 
-                                        index={index}
+                                        cartProduct={produto}
                                         key={index}
                                     />
                                 ))

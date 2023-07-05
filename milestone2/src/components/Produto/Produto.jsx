@@ -4,17 +4,15 @@ import './Produto.css';
 
 import { UserContext } from '../../UserContext';
 
-
 import BotaoAdicionar from './BotaoAdicionar/BotaoAdicionar';
 import BotaoEditar from './BotaoEditar/BotaoEditar';
 import BotaoRemover from './BotaoRemover/BotaoRemover';
 
 import AdicionarCarrinho from './AdicionarCarrinho/AdicionarCarrinho';
 import EditarProduto from './EditarProduto/EditarProduto';
-
 const Produto = ( { produto, updateProduto } ) =>
 {
-    const { userData, updateUserData } = useContext(UserContext);
+    const { userData, updateUserData, addCart, fetchUsers, updateUser } = useContext(UserContext);
 
     const [ imagem, setImagem ] = useState(null);
     const [ adicionarCarrinho, setAdicionarCarrinho ] = useState(false);
@@ -40,29 +38,99 @@ const Produto = ( { produto, updateProduto } ) =>
         importarImagem();
     }, [imagem]);
 
-    const updateEditarCarrinho = ( user ) =>
+    const removeProduct = async () =>
+    {
+        await Promise.all[ updateRemoveUsers(produtoAtual), updateProduto({...produtoAtual, estoque: 0})];
+    };
+
+    const updateRemoveUsers = async ( produtoAtual ) =>
+    {
+        const users = await fetchUsers();
+        
+        const updatePromises = users.map(async (user) => 
+        {
+            let novoTotal = user.totalProducts;
+            let novoPreco = user.purchaseAmount;
+
+            (user.cartProducts).forEach((product) =>
+            {
+                if(product.id === produtoAtual._id)
+                {
+                    novoTotal -= product.quantidade;
+                    novoPreco -= (product.quantidade * produtoAtual.preco)
+                } 
+            })
+
+            const newCart = (user.cartProducts).filter((product) => (product.id !== produtoAtual._id));
+
+            const newUserData = 
+            {
+                ...user, 
+                cartProducts: newCart, 
+                totalProducts: novoTotal, 
+                purchaseAmount: novoPreco
+            };
+
+            if(user._id === userData._id)
+            {
+                updateUserData(newUserData);
+            }
+
+            await updateUser(newUserData);
+        });
+
+        await Promise.all(updatePromises);
+    }
+
+    const addProduct = async (produto, tamanho, quantidade) =>
+    {
+        const newData = await addCart(produto._id, tamanho, quantidade, userData);
+        
+        updateUserData(newData);
+    }
+
+    const closeAddPopUp = (size, quantidade, buy) =>
+    {
+        setAdicionarCarrinho(false);
+
+        if(buy)
+        {
+            addProduct(produtoAtual, size, quantidade);
+        }
+    }
+
+    const closeEditPopUp = async ( edit, newProduct ) =>
+    {
+        if(edit)
+        {
+            setProdutoAtual(newProduct);
+
+            await Promise.all([updateProduto(newProduct), updateUsers(newProduct)]);
+        }
+
+        setEditarProduto(false);
+    }
+
+    const updateEditarCarrinho = ( user, newProduct ) =>
     {
         let novoTotal = user.totalProducts;
 
         const newCart = (user.cartProducts).map((product) =>
         {
-            if(product.id === produtoAtual.id)
+            if(product.id === newProduct._id)
             {
                 let novaQuantidade = product.quantidade;
 
-                if(novaQuantidade > produtoAtual.estoque)
+                if(novaQuantidade > newProduct.estoque)
                 {
-                    novoTotal -= (novaQuantidade - produtoAtual.estoque)
+                    novoTotal -= (novaQuantidade - newProduct.estoque)
 
-                    novaQuantidade = produtoAtual.estoque;
+                    novaQuantidade = newProduct.estoque;
                 }
 
                 return { 
                     ...product, 
-                    nome: produtoAtual.nome,
-                    estoque: produtoAtual.estoque, 
-                    preco: produtoAtual.preco, 
-                    quantidade: novaQuantidade 
+                    quantidade: novaQuantidade,
                 };
             }
 
@@ -72,187 +140,38 @@ const Produto = ( { produto, updateProduto } ) =>
         return [ newCart, novoTotal ];
     }
 
-    useEffect(() =>
+    const updateUsers = async ( newProduct ) =>
     {
-        if(!userData) return;
-        
-        let users = JSON.parse(localStorage.getItem('users'));
-        
-        users = users.map((user) =>
-        {
-            const [ newCart, novoTotal ] = updateEditarCarrinho(user);
+        const users = await fetchUsers();
 
+        const updatePromises = users.map(async (user) =>
+        {
+            const [ newCart, novoTotal ] = updateEditarCarrinho(user, newProduct);
+    
             let novoPreco = 0;
+
             newCart.forEach((produto) => 
             {
-                novoPreco += (produto.preco * produto.quantidade);
+                novoPreco += (newProduct.preco * produto.quantidade);
             })
-
-            if(user.id === userData.id)
-            {
-                const newUserData = 
-                {
-                    ...userData, 
-                    cartProducts: newCart, 
-                    totalProducts: novoTotal, 
-                    purchaseAmount: novoPreco
-                };
-
-                updateUserData(newUserData);
-            }
-
-            user = 
+    
+            const newUserData = 
             {
                 ...user, 
                 cartProducts: newCart, 
                 totalProducts: novoTotal, 
                 purchaseAmount: novoPreco
             };
-
-            return user;
-        });
-
-        localStorage.setItem('users', JSON.stringify(users));
-
-        updateProduto(produtoAtual);
-
-    }, [produtoAtual])
-
-    const removeProduct = () =>
-    {
-        updateProduto({...produtoAtual, estoque: 0});
-
-        let users = JSON.parse(localStorage.getItem('users'));
-
-        users = users.map((user) => 
-        {
-            let novoTotal = user.totalProducts;
-            let novoPreco = user.purchaseAmount;
-
-            (user.cartProducts).forEach((product) =>
+    
+            if(user._id === userData._id)
             {
-                if(product.id === produtoAtual.id)
-                {
-                    novoTotal -= product.quantidade;
-                    novoPreco -= (product.quantidade * product.preco)
-                } 
-            })
-
-            const newCart = (user.cartProducts).filter((product) => (product.id !== produtoAtual.id));
-
-            if(user.id === userData.id)
-            {
-                const newUserData = 
-                {
-                    ...userData, 
-                    cartProducts: newCart, 
-                    totalProducts: novoTotal, 
-                    purchaseAmount: novoPreco
-                };
-        
                 updateUserData(newUserData);
             }
 
-            user = 
-            {
-                ...user, 
-                cartProducts: newCart, 
-                totalProducts: novoTotal, 
-                purchaseAmount: novoPreco
-            };
-
-            return user;
-        })
-
-        localStorage.setItem('users', JSON.stringify(users));
-    };
-
-    const addProduct = (product, quantity) =>
-    {
-        let newData;
-
-        const index = userData.cartProducts.findIndex((obj) => 
-        {
-            const { quantidade, ...rest } = obj;
-
-            return JSON.stringify(rest) === JSON.stringify(product);
+            await updateUser(newUserData);
         });
-      
-        if(index !== -1)
-        {
-            const novaQuantidade = 
-            (
-                userData.cartProducts[index].quantidade + quantity > produtoAtual.estoque ? 
-                produtoAtual.estoque : userData.cartProducts[index].quantidade + quantity
-            );
 
-            const produtosAtualizados = (userData.cartProducts).map((obj, i) =>
-            {
-                if (i === index)
-                {
-                    return { ...obj, quantidade: novaQuantidade };
-                }
-
-                return obj;
-            });
-
-        
-            newData = {...userData, cartProducts: produtosAtualizados};
-
-            if(userData.cartProducts[index].quantidade + quantity <= produtoAtual.estoque)
-            {
-                newData = {...newData, totalProducts: (userData.totalProducts += quantity)};
-            }
-            else
-            {
-                newData = {...newData, totalProducts: (userData.totalProducts += (produtoAtual.estoque - userData.cartProducts[index].quantidade))}
-            }
-        }
-        else
-        {
-            let produtoComQuantidade = {...product, quantidade: quantity};
-
-            newData = {...userData, cartProducts: [...userData.cartProducts, produtoComQuantidade]};
-            newData = {...newData, totalProducts: (newData.totalProducts += quantity)}; 
-            newData = {...newData, purchaseAmount: (newData.purchaseAmount) += (quantity * produtoAtual.preco)}
-        }
-
-        updateUser(newData);
-
-        updateUserData(newData); 
-    }
-
-    const updateUser = ( newData ) =>
-    {
-        const users = JSON.parse(localStorage.getItem('users'));
-
-        const userIndex = users.findIndex((user) => user.id === userData.id);
-
-        users[userIndex] = newData;
-        
-        localStorage.setItem('users', JSON.stringify(users)); 
-    }
-
-    const closeAddPopUp = (size, quantidade, buy) =>
-    {
-        setAdicionarCarrinho(false);
-
-        if(buy)
-        {
-            let produtoComTamanho = {...produtoAtual, tamanho: size};
-
-            addProduct(produtoComTamanho, quantidade);
-        }
-    }
-
-    const closeEditPopUp = ( edit, newProduct ) =>
-    {
-        if(edit)
-        {
-            setProdutoAtual(newProduct);
-        }
-
-        setEditarProduto(false);
+        await Promise.all(updatePromises);
     }
 
     return (

@@ -1,18 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, {useState } from 'react';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { TextField, Button, Paper, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
-import { UserContext } from '../../../UserContext';
-
-import { produtos } from '../../../server/data/produtos.js';
-
-const LoginForm = ( { theme, setCreateAccount, usuarios } ) =>
+const LoginForm = ( { theme, setCreateAccount, loginVerification } ) =>
 {
-    
-    const { updateUserData } = useContext(UserContext);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');   
 
@@ -27,35 +19,11 @@ const LoginForm = ( { theme, setCreateAccount, usuarios } ) =>
         setPassword(e.target.value);
     };  
 
-    
-    const navigate = useNavigate();
-
     const handleSubmit = (e) =>
     {
         e.preventDefault(); 
 
-        const user = usuarios.find
-        (
-            (user) => user.email === email && user.password === password
-        )
-
-        if(user)
-        {
-            const catalogo = localStorage.getItem('catalogo');
-            
-            if(!catalogo)
-            {
-                localStorage.setItem('catalogo', JSON.stringify(produtos));
-            }
-            
-            navigate(-1);
-            
-            updateUserData(user);
-        }
-        else
-        {
-            alert("User or password wrong!")
-        }        
+        loginVerification(email, password);        
     };  
 
     return (

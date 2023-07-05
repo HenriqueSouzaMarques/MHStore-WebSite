@@ -14,9 +14,9 @@ const Shorts = ( { catalogo, updateProduto } ) =>
         
             <div className="shorts-container">
                 
-                {shorts.map((shorts, index) => (
+                {shorts.map((product, index) => (
                     <Produto 
-                        produto={shorts}
+                        produto={product}
                         updateProduto={updateProduto}
                         key={index}    
                     />

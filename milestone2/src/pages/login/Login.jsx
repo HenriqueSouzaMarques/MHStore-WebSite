@@ -1,7 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
+import axios from 'axios';
 
-import { users } from "../../server/data/users.js";
+import { useNavigate } from 'react-router-dom';
 
 import Logo from '../../components/Header/Logo/Logo'
 import LoginForm from "./LoginForm/LoginForm";
@@ -14,19 +15,64 @@ const Login = () =>
 {   
     const [createAccount, setCreateAccount] = useState(false);
 
-    const { userData } = useContext(UserContext);
+    const { userData, updateUserData } = useContext(UserContext);
 
-    const [ usuarios, setUsuarios ] = useState(() => 
+    const navigate = useNavigate();
+
+    const loginVerification = async ( email, password ) =>
     {
-        const usuarios = localStorage.getItem('users');
+        try
+        {
+            const response = await axios.post('http://localhost:8000/users', { email: email, password: password},
+            {
+                headers:
+                {
+                    'Content-Type': 'application/json',
+                    'X-Action': 'verifyLogin'
+                }
+            });     
+            
+            updateUserData(response.data);
 
-        return (usuarios ? JSON.parse(usuarios) : users);
-    });
+            navigate(-1);
+        }
+        catch (error)
+        {
+          alert('Email or password wrong!');
+        }
+    }
 
-    useEffect(() =>
+    const createUser = async ( newUser ) =>
     {
-        localStorage.setItem('users', JSON.stringify(usuarios));
-    }, [usuarios]);
+        console.log(newUser);
+        
+        try
+        {
+            const response = await axios.post('http://localhost:8000/users', newUser,
+            {
+                headers:
+                {
+                    'Content-Type': 'application/json',
+                    'X-Action': 'createUser'
+                }
+            });    
+
+            if(!userData)
+            {
+                updateUserData(response.data);
+                navigate(-1);
+            }
+            else
+            {
+                navigate('/users');
+            }
+        
+        }
+        catch (error)
+        {
+            alert("User already registered!");
+        }
+    };
 
     const theme = createTheme(
     {
@@ -58,13 +104,13 @@ const Login = () =>
                     (createAccount || (userData && userData.type === 'admin')) ? 
                         <SignUp 
                             theme={theme}   
-                            userData={userData}
+                            createUser={createUser}
                         />
                     :
                         <LoginForm 
                             theme={theme}
                             setCreateAccount={setCreateAccount}
-                            usuarios={usuarios}
+                            loginVerification={loginVerification}
                         /> 
                 }
                 

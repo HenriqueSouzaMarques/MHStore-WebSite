@@ -1,6 +1,4 @@
-import React, { useContext, useState } from 'react';
-
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Paper, ThemeProvider, Button, Grid } from '@mui/material';
 
@@ -11,19 +9,27 @@ import UserInfo from './UserInfo/UserInfo';
 import Address from './Address/Address';
 import Phone from './Phone/Phone'
 
-import { produtos } from '../../../server/data/produtos.js';
-
 import './SignUp.css';
 
-const SignUp = ( { theme } ) => 
+const SignUp = ( { theme, createUser } ) => 
 {
-    const { userData, updateUserData } = useContext(UserContext);
+    const { userData, fetchUsers } = useContext(UserContext);
 
-    const usuarios = JSON.parse(localStorage.getItem('users'));
+    const [usuarios, setUsuarios] = useState(null);
+  
+    useEffect(() =>
+    {
+        const fetchData = async () =>
+        {
+            const usuarios = await fetchUsers();
+            setUsuarios(usuarios);
+        };
+        
+        fetchData();
+    }, []);
 
     const [newUserInfo, setNewUserInfo] = useState({
         type: (userData && userData.type === 'admin') ? 'admin' : 'cliente',
-        id: usuarios[usuarios.length - 1].id + 1,
         email: '',
         username: '',
         password: '',
@@ -32,12 +38,7 @@ const SignUp = ( { theme } ) =>
         street: '',
         number: '',
         zipCode: '',
-        fullAddress: '',
         phone: '',
-        cartProducts: [],
-        totalProducts: 0,
-        purchaseAmount: 0,
-        purchaseHistory: []
     })
 
     const handleEmailChange = (e) =>
@@ -85,45 +86,18 @@ const SignUp = ( { theme } ) =>
         setNewUserInfo({ ...newUserInfo, phone: e.target.value });
     };
 
-    const navigate = useNavigate();
-
     const handleSubmit = (e) =>
     {
         e.preventDefault();
-        
-        const alreadyUser = usuarios.some((user) => user.email === newUserInfo.email)
 
-        if (alreadyUser)
+        const newUser =
         {
-            alert("account already registered!")
-        }
-        else
-        {
-            const novoUser = {...newUserInfo, fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode};
+            ...newUserInfo, 
+            id: usuarios[usuarios.length - 1].id + 1,
+            fullAddress: newUserInfo.street + " " + newUserInfo.number + " " + newUserInfo.zipCode
+        };
 
-            usuarios.push(novoUser);
-            
-            localStorage.setItem('users', JSON.stringify(usuarios));
-    
-            const catalogo = localStorage.getItem('catalogo');
-
-            if(!catalogo)
-            {
-                localStorage.setItem('catalogo', JSON.stringify(produtos));
-            }
-
-            if(!userData)
-            {
-                updateUserData(novoUser);
-                navigate(-1);
-            }
-            else
-            {
-                navigate('/users');
-            }
-            
-        }
-        
+        createUser(newUser);
     }
 
     return (

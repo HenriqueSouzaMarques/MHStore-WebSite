@@ -18,56 +18,41 @@ import "./Produtos.css";
 
 const Produtos = () =>
 {   
-    const { userData } = useContext(UserContext);
+    const { userData, fetchCatalogo, updateProduct } = useContext(UserContext);
     const [ adicionarProduto, setAdicionarProduto ] = useState(false);
 
     const [ catalogo, setCatalogo ] = useState([]);
 
-    const fetchCatalogo = async () =>
+    const updateProduto = async ( produto ) =>
     {
-        try
-        {
-            const response = await axios.get('http://localhost:8000/products');
-            return response.data;
-        }
-        catch (error)
-        {
-          console.error('Error fetching products:', error);
-          throw error; 
-        }
-    };
+        const updatedProduct = await updateProduct( produto );
 
-    const updateProduto = ( produto ) =>
-    {
-        axios.put(`http://localhost:8000/products/${produto.id}`, produto)
-        .then(() =>
+        setCatalogo((prevCatalogo) =>
         {
-            setCatalogo(() =>
-            (
-                catalogo.map((product) =>
+            const newCatalogo = prevCatalogo.map((product) =>
+            {
+                if (product._id === produto._id)
                 {
-                    if (product.id === produto.id)
-                    {
-                        return produto;
-                    }
+                    return updatedProduct;
+                }
 
-                    return product;
-                })
-            )
-            );
+                return product;
+            })
+
+            return newCatalogo;
         })
-        .catch((error) =>
-        {
-            console.error('Error updating examples:', error);
-        });
     }
 
     useEffect(() =>
     {
-        fetchCatalogo().then((produtos) => { setCatalogo(produtos) });
-    }, [catalogo]);
+        const fetchData = async() =>
+        {
+            const fetchedCatalogo = await fetchCatalogo();
+            setCatalogo(fetchedCatalogo);
+        }
 
-    
+        fetchData();
+    }, [catalogo]);
 
     return (
         <>
@@ -111,6 +96,7 @@ const Produtos = () =>
             {
                 adicionarProduto && 
                 <AdicionarCatalogo 
+                    catalogo={catalogo}
                     setCatalogo={setCatalogo} 
                     setAdicionarProduto={setAdicionarProduto}
                 />

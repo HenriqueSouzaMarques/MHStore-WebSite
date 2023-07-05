@@ -5,13 +5,10 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { UserContext } from '../../../UserContext';
 import { useNavigate } from 'react-router-dom';
 
-const UserData = ({ index, setHistory }) =>
+const UserData = ({ user, setHistory }) =>
 {
-  const { userData, updateUserData } = useContext(UserContext);
+  const { userData, updateUserData, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')));
-  const user = users[index];
 
   const [type, setType] = useState(user.type);
   const [username, setUsername] = useState(user.username);
@@ -68,7 +65,7 @@ const UserData = ({ index, setHistory }) =>
     setPhone(e.target.value);
   };
 
-  const handleSave = () =>
+  const handleSave = async () =>
   {
     const fullAddress = street + " " + number + " " + zipCode;
 
@@ -87,13 +84,9 @@ const UserData = ({ index, setHistory }) =>
       fullAddress
     };
 
-    const updatedUsers = [...users];
-    updatedUsers[index] = updatedUser;
+    await updateUser(updatedUser);
 
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-    if(updatedUsers[index].id === userData.id)
+    if(updateUser._id === userData._id)
     {
       updateUserData(updatedUser);
 

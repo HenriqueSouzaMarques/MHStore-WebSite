@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import memoizeOne from 'memoize-one';
 
-import { Typography, Avatar, Box, ButtonGroup, Button } from '@mui/material';
+import { Typography, Avatar, ButtonGroup, Button } from '@mui/material';
 
 import MudarQuantidade from '../../../components/Produto/AdicionarCarrinho/MudarQuantidade/MudarQuantidade';
 import { UserContext } from '../../../UserContext';
@@ -10,45 +11,94 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import './ProdutoCarrinho.css'
 
-const ProdutoCarrinho = ( { index } ) =>
-{
-    const { userData, updateUserData } = useContext(UserContext);
 
-    const [imagem, setImagem] = useState(null);
-    
-    useEffect(() => 
+const loadImage = async (imageUrl, fallbackImageUrl) =>
+{
+    try
     {
-        const importarImagem = async () =>
+        const importedImage = await import(`../../../assets/Produtos/${imageUrl}`);
+        return importedImage.default;
+    }
+    catch (error)
+    {
+        const importedFallbackImage = await import(`../../../assets/Produtos/${fallbackImageUrl}`);
+        return importedFallbackImage.default;
+    }
+};
+
+const ProdutoCarrinho = ( { cartProduct } ) =>
+{
+    const { userData, updateUserData, fetchProduto, updateUser } = useContext(UserContext);
+
+    const fetchProdutoMemoized = memoizeOne(fetchProduto);
+
+    const [ tamanho, setTamanho ] = useState(cartProduct.tamanho);
+    const [imagem, setImagem] = useState(null);
+    const [produto, setProduto] = useState(null);
+    const [marca, setMarca] = useState('');
+    const [nome, setNome] = useState('');
+    const [preco, setPreco] = useState(0);
+    const [estoque, setEstoque] = useState(0);
+    const [quantidade, setQuantidade] = useState(cartProduct.quantidade);
+  
+    useEffect(() =>
+    {
+        const fetchData = async () =>
         {
-            try 
+            const product = await fetchProdutoMemoized(cartProduct.id);
+  
+            const [loadedImage, loadedFallbackImage] = await Promise.all(
+            [
+                loadImage(product.imagem, 'not_found.png'),
+                loadImage('not_found.png')
+            ]);
+  
+            setImagem(loadedImage || loadedFallbackImage);
+            setProduto(product);
+            setMarca(product.marca);
+            setNome(product.nome);
+            setPreco(product.preco);
+            setEstoque(product.estoque);
+  
+            if(cartProduct.quantidade > product.estoque)
             {
-                const imagem = await import(`../../../assets/Produtos/${userData.cartProducts[index].imagem}`);
-                setImagem(imagem.default);
-            }
-            catch (error) 
-            {
-                const imagem = await import('../../../assets/Produtos/not_found.png');
-                setImagem(imagem.default);
+                setQuantidade(product.estoque);
             }
         };
-    
-        importarImagem();
-    }, [userData]);
+        fetchData();
+    }, []);
 
-    const { tamanho, marca, nome, preco, quantidade, estoque } = userData.cartProducts[index];
     const handleIncreaseQuantity = () =>
     {
         if(quantidade < estoque)
         {
             const novoTotal = quantidade + 1;
 
-            const novoProduto = {...userData.cartProducts[index], quantidade: novoTotal};
+            const novoProduto = {...produto, quantidade: novoTotal};
 
-            const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
+            setProduto(novoProduto);
+            setQuantidade(novoTotal);
 
-            const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: userData.totalProducts + 1};
+            const novoCarrinho = (userData.cartProducts).map((product) =>
+            {
+                if(product.id === produto._id)
+                {
+                    return { id: produto._id, quantidade: novoTotal, tamanho: tamanho};
+                }
+
+                return product;
+            });
+
+            const novosDados =
+            {
+                ...userData, 
+                cartProducts: novoCarrinho, 
+                totalProducts: userData.totalProducts + 1,
+                purchaseAmount: userData.purchaseAmount + preco,
+            };
 
             updateUserData(novosDados);
+            updateUser(novosDados);
         }
 
     }
@@ -59,23 +109,43 @@ const ProdutoCarrinho = ( { index } ) =>
         {
             const novoTotal = quantidade - 1;
 
-            const novoProduto = {...userData.cartProducts[index], quantidade: novoTotal};
+            const novoProduto = {...produto, quantidade: novoTotal};
 
-            const novoCarrinho = userData.cartProducts.slice(0, index).concat(novoProduto).concat(userData.cartProducts.slice(index + 1));
+            setProduto(novoProduto);
+            setQuantidade(novoTotal);
 
-            const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: userData.totalProducts - 1};
+            const novoCarrinho = (userData.cartProducts).map((product) =>
+            {
+                if(product.id === produto._id)
+                {
+                    return { id: produto._id, quantidade: novoTotal, tamanho: tamanho};
+                }
+
+                return product;
+            });
+
+            const novosDados =
+            {
+                ...userData, 
+                cartProducts: novoCarrinho, 
+                totalProducts: userData.totalProducts - 1,
+                purchaseAmount: userData.purchaseAmount - preco,
+            };
 
             updateUserData(novosDados);
+            updateUser(novosDados);
         }  
     }
 
     const handleDelete = () =>
     {
-        let novoCarrinho = (userData.cartProducts).slice(0, index).concat((userData.cartProducts).slice(index + 1));
+        let novoCarrinho = (userData.cartProducts).filter((product) => product.id !== produto._id);
 
         const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: (userData.totalProducts - quantidade)};
 
         updateUserData(novosDados);
+
+        updateUser(novosDados);
     }
 
     

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 
 import Header from "../../components/Header/Header";
@@ -7,13 +7,27 @@ import Footer from "../../components/Footer/Footer";
 import UserData from './UserData/UserData';
 import NovoAdminBotao from './NovoAdminBotao/NovoAdminBotao';
 import HistoricoCompra from './HistoricoCompra/HistoricoCompra';
+import { UserContext } from '../../UserContext';
 
 
 const Usuarios = () =>
 {
-    const users = JSON.parse(localStorage.getItem('users'));
+    const { fetchUsers } = useContext(UserContext);
 
     const [ compras, setCompras ] = useState(null);
+    const [ users, setUsers ] = useState(null);
+
+    useEffect(() =>
+    {
+        const fetchData = async () =>
+        {
+            const usuarios = await fetchUsers();
+
+            setUsers(usuarios);
+        };
+
+        fetchData();
+    }, []);
 
     return (
     <>
@@ -32,7 +46,7 @@ const Usuarios = () =>
                 users.map((user, index) =>
                 (
                     <UserData 
-                        index={index} 
+                        user={user} 
                         setHistory={setCompras}
                         key={index}
                     />

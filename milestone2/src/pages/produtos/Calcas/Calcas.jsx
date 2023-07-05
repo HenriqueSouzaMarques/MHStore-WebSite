@@ -14,9 +14,9 @@ const Calcas = ( { catalogo, updateProduto } ) =>
         
             <div className="calcas-container">
                 
-                {calcas.map((calca, index) => (
+                {calcas.map((product, index) => (
                     <Produto 
-                        produto={calca}
+                        produto={product}
                         updateProduto={updateProduto}
                         key={index}    
                     />

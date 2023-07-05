@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { TextField, FormControl, FormControlLabel, Radio, RadioGroup, Button, Grid } from '@mui/material';
 import { AddCircleOutline, Cancel } from '@mui/icons-material';
+import { UserContext } from '../../../UserContext';
 
-const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
+const AdicionarCatalogo = ( { catalogo, fetchCatalogo, setCatalogo, setAdicionarProduto } ) =>
 {
-    const catalogo = JSON.parse(localStorage.getItem('catalogo'));
+    const { addProduct } = useContext(UserContext);
 
     const [produto, setProduto] = useState(
     {
@@ -14,9 +15,8 @@ const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
         imagem: '',
         preco: '',
         estoque: '',
-        id: catalogo[catalogo.length - 1].id + 1
     });
-    
+
     const handleChange = (e) =>
     {
         const { name, value } = e.target;
@@ -28,7 +28,7 @@ const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
         }));
     };
     
-    const handleSubmit = (e) =>
+    const handleSubmit = async (e) =>
     {
         e.preventDefault();
 
@@ -36,13 +36,18 @@ const AdicionarCatalogo = ( { setCatalogo, setAdicionarProduto } ) =>
         {
             ...produto, 
             estoque: parseInt(produto.estoque),
-            preco: parseInt(produto.preco)
+            preco: parseInt(produto.preco),
+            id: catalogo[catalogo.length - 1].id + 1
         }
+        
+        await addProduct(produtoFinalizado);
 
-        catalogo.push(produtoFinalizado);
+        const novoCatalogo = [...catalogo, { produtoFinalizado }];
 
-        setCatalogo(catalogo);
-        setAdicionarProduto(false);   
+        setCatalogo(novoCatalogo);
+
+        setAdicionarProduto(false);  
+        
     };
 
     const handleCancel = () =>

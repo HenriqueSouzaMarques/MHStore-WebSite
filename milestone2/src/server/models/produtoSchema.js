@@ -1,3 +1,5 @@
+"use strict";
+
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
@@ -6,9 +8,9 @@ const productSchema = new Schema(
 {
     nome: { type: String, required: true },
 
-    tipo: { type: String, required: true },
+    tipo: { type: String, enum: ['t-shirt', 'shorts', 'pants', 'sneakers'], required: true },
 
-    marca: { type: String, required: true },
+    marca: { type: String, enum: ['Adidas', 'Nike', 'Vans', 'High'], required: true },
 
     imagem: { type: String, required: true },
 
