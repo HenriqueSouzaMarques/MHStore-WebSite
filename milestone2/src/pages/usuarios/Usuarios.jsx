@@ -32,7 +32,7 @@ const Usuarios = () =>
     return (
     <>
         <Header />
-        <div className={compras && 'blur'}>
+        <div className={compras ? 'blur' : null}>
 
             <h2>Users</h2>
 

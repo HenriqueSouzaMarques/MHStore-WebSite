@@ -2,7 +2,7 @@ import React from "react";
 
 import TipoProduto from "./TipoProduto/TipoProduto";
 
-import { tipoProdutos } from "../../../server/data/tipoProdutos.js"
+import { tipoProdutos } from "../../../data/tipoProdutos.js"
 
 import "./Resumo.css"
 

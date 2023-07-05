@@ -86,7 +86,7 @@ const Carrinho = () =>
     return (
         <>
             <Header/>
-            <div className={isBlurred && 'blur'}>
+            <div className={isBlurred ? 'blur' : null}>
 
                 <h2> Cart </h2>
 
