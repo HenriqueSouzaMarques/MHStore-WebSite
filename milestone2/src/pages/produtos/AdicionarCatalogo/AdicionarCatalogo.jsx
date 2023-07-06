@@ -39,16 +39,15 @@ const AdicionarCatalogo = ( { catalogo, fetchCatalogo, setCatalogo, setAdicionar
             preco: parseInt(produto.preco),
             id: catalogo[catalogo.length - 1].id + 1
         }
-        
-        await addProduct(produtoFinalizado);
 
+        setAdicionarProduto(false);  
+        
         setCatalogo((prevCatalogo) =>
         {
             return [...prevCatalogo, { produtoFinalizado }]
         });
 
-        setAdicionarProduto(false);  
-        
+        await addProduct(produtoFinalizado);
     };
 
     const handleCancel = () =>
