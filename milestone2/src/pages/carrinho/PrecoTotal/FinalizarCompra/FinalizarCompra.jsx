@@ -29,8 +29,6 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
     const [ coupon, setCoupon ] = useState(null);
 
-    const [isValidCoupon, setIsValidCoupon] = useState(false);
-
     const handleEditClick = () =>
     {
         setIsEditing(true);  
@@ -90,7 +88,7 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
     const closeNotBuying = () =>
     {
-        if(isValidCoupon)
+        if(coupon)
         {
             handleDisableCoupon();
         }
