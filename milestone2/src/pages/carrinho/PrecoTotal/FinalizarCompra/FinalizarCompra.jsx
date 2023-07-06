@@ -11,13 +11,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { UserContext } from "../../../../UserContext";
 
-import { cupons } from "../../../../data/cupons.js"
-
 import './FinalizarCompra.css'
 
 const FinalizarCompra = ( { closeFinalize } ) =>
 {
-    const { userData } = useContext(UserContext);
+    const { userData, fetchCoupon, updateCoupon, deleteCoupon } = useContext(UserContext);
 
     const [ total, setTotal ] = useState(userData.purchaseAmount);
 
@@ -26,8 +24,10 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
     const [ isEditing, setIsEditing ] = useState(false);
 
-    const [ discountCoupon, setDiscountCoupon ] = useState('');
+    const [ discountCoupon, couponName ] = useState('');
     const [ discount, setDiscount ] = useState(0);
+
+    const [ coupon, setCoupon ] = useState(null);
 
     const [isValidCoupon, setIsValidCoupon] = useState(false);
 
@@ -48,7 +48,7 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
     const handleCouponChange = (e) =>
     {
-        setDiscountCoupon(e.target.value);
+        couponName(e.target.value);
     };
 
     const handleCCChange = (e) =>
@@ -56,7 +56,7 @@ const FinalizarCompra = ( { closeFinalize } ) =>
         setCreditCart(e.target.value);
     };
 
-    const closeBuying = (e) =>
+    const closeBuying = async (e) =>
     {
         e.preventDefault();
 
@@ -67,6 +67,24 @@ const FinalizarCompra = ( { closeFinalize } ) =>
         else
         {
             closeFinalize(true, total, creditCard);
+
+            if(coupon)
+            {
+                if(coupon.quantidade === 1)
+                {
+                    await deleteCoupon(coupon._id);
+                }
+                else
+                {
+                    const newCoupon = 
+                    {
+                        ...coupon,
+                        quantidade: coupon.quantidade - 1
+                    }
+
+                    await updateCoupon(newCoupon._id, newCoupon);
+                }
+            }
         }
     }
 
@@ -80,28 +98,24 @@ const FinalizarCompra = ( { closeFinalize } ) =>
         closeFinalize(false, 0, '')
     }
 
-    const handleApplyCoupon = () =>
+    const handleApplyCoupon = async () =>
     {
         if(discountCoupon)
         {
-            const cupom = cupons.find
-            (
-                (cupom) => cupom.nome === discountCoupon
-            );
-            
-            if(cupom)
+            try
             {
+                const cupom = await fetchCoupon(discountCoupon);
+
                 setDiscount(total / (100 / cupom.desconto));
-    
+
                 const novoTotal = total - (total / (100 / cupom.desconto));                
-                
                 setTotal(novoTotal);
 
-                setIsValidCoupon(true);
+                setCoupon(cupom);
             }
-            else
+            catch(error)
             {
-                alert('Invalid coupon!')
+                alert('Invalid coupon!');
             }
         }
     };
@@ -113,8 +127,9 @@ const FinalizarCompra = ( { closeFinalize } ) =>
 
         setDiscount(0);
 
-        setDiscountCoupon('');
-        setIsValidCoupon(false);
+        couponName('');
+
+        setCoupon(null);
     }
 
     return (
@@ -160,15 +175,15 @@ const FinalizarCompra = ( { closeFinalize } ) =>
                                 variant="outlined"
                                 placeholder='Insert Coupon'
                                 InputProps={{
-                                    readOnly: isValidCoupon
+                                    readOnly: coupon
                                 }}
                             />
 
                             <IconButton 
                                 style={{color: 'black'}}
-                                onClick={isValidCoupon ? handleDisableCoupon : handleApplyCoupon}
+                                onClick={coupon ? handleDisableCoupon : handleApplyCoupon}
                             >
-                                {!isValidCoupon ? <Send /> : <Clear />}
+                                {!coupon ? <Send /> : <Clear />}
                             </IconButton>
 
                     </div>
@@ -186,7 +201,7 @@ const FinalizarCompra = ( { closeFinalize } ) =>
                             />
                     </div>
 
-                    <div className='add-carrinho-buttons-container'>
+                    <div className='buttons-container'>
                         <Button 
                             type='submit'
                             style={{color: 'black', borderColor: 'black'}}

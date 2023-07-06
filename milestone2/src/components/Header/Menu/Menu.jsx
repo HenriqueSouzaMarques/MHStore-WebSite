@@ -8,6 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import LoginIcon from '@mui/icons-material/Login';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 
 import './Menu.css'
 
@@ -24,6 +25,17 @@ const Menu = () =>
                 {userData && <li className="user-info"> <UserInfo /> </li>}
                 
                 <li> <BotaoHeader link={"/"} props={null}> <HomeIcon /> </BotaoHeader> </li>
+
+                {
+                    userData && userData.type === 'admin' && 
+                    
+                    <li>
+                        <BotaoHeader link={"/coupon"} props={null}>
+                            <ConfirmationNumberIcon />
+                        </BotaoHeader>
+
+                    </li>
+                }
 
                 {
                     userData && userData.type === 'admin' && 

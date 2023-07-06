@@ -204,7 +204,7 @@ const Produto = ( { produto, updateProduto } ) =>
                             userData && userData.type === 'admin' &&
                                 
                             <div 
-                                className='add-carrinho-buttons-container'
+                                className='buttons-container'
                                 style={{width: "100%"}}
                             >
                                 <BotaoEditar 

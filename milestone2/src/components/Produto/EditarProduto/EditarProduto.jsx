@@ -122,7 +122,7 @@ const EditarProduto = ( { product, closePopUp } ) =>
                         />  
                     </div>
 
-                    <div className='add-carrinho-buttons-container'>
+                    <div className='buttons-container'>
                         <Button 
                             variant="contained" 
                             endIcon={<CancelIcon/>} 

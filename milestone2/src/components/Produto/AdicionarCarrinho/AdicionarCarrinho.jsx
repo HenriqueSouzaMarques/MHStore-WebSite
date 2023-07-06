@@ -85,7 +85,7 @@ const AdicionarCarrinho = ( { product, closePopUp } ) =>
                     />
                 </FormControl>
 
-                <div className='add-carrinho-buttons-container'>
+                <div className='buttons-container'>
                     <Button 
                         className='add-button'
                         variant="contained" 

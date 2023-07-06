@@ -46,7 +46,7 @@ export const UserProvider = ( { children } ) =>
         {
             console.error('Error fetching users:', error);
 
-            throw error;
+            throw new Error(error.message);
         }
     };
 
@@ -67,7 +67,7 @@ export const UserProvider = ( { children } ) =>
         {
             console.error('Error adding to the cart:', error);
 
-            throw error;
+            throw new Error(error.message);
         }
     }
 
@@ -82,9 +82,83 @@ export const UserProvider = ( { children } ) =>
         {
             console.error('Error fetching products:', error);
 
-            throw error;
+            throw new Error(error.message);
         }
     };
+
+    const fetchCoupons = async () =>
+    {
+        try
+        {
+            const response = await axios.get('http://localhost:8000/coupon');
+
+            return response.data;
+        }
+        catch (error)
+        {
+            console.error('Error fetching coupons:', error);
+
+            throw new Error(error.message);
+        }
+    }
+
+    const fetchCoupon = async ( nome ) =>
+    {
+        try
+        {
+            const response = await axios.get(`http://localhost:8000/coupon/${nome}`);
+
+            return response.data;
+        }
+        catch (error)
+        {
+            console.error('Error fetching coupon:', error);
+
+            throw new Error(error.message);
+        }
+    }
+
+    const updateCoupon = async ( id, coupon ) =>
+    {
+        try
+        {
+            const response = await axios.put(`http://localhost:8000/coupon/${id}`, coupon);
+            
+            return response.data;
+        } 
+        catch (error)
+        {
+            throw new Error(error.message);
+        }
+    }
+
+    const deleteCoupon = async ( id ) =>
+    {
+        try
+        {
+            const response = await axios.delete(`http://localhost:8000/coupon/${id}`);
+
+            return response.status;
+        }
+        catch (error)
+        {
+            throw new Error(error.message);
+        }
+    }
+
+    const addCoupon = async ( novoCupom ) =>
+    {
+        try
+        {
+            const response = await axios.post("http://localhost:8000/coupon", novoCupom);
+
+            return response.data;
+        }
+        catch (error)
+        {
+            throw new Error(error.message);
+        }
+    }
 
     const updateProduct = async ( produto ) =>
     {
@@ -126,7 +200,7 @@ export const UserProvider = ( { children } ) =>
         {
             console.error('Error fetching product:', error);
 
-            throw error;
+            throw new Error(error.message);
         }  
     }
 
@@ -138,9 +212,14 @@ export const UserProvider = ( { children } ) =>
                 updateUserData, 
                 logout, 
                 fetchUsers,
+                fetchCoupons,
+                fetchCoupon,
                 fetchCatalogo,
                 fetchProduto,
                 updateUser, 
+                updateCoupon,
+                deleteCoupon,
+                addCoupon,
                 addCart,
                 addProduct,
                 updateProduct

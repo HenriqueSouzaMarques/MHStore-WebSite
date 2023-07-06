@@ -9,6 +9,7 @@ import Usuarios from './pages/usuarios/Usuarios';
 import { UserProvider } from './UserContext';
 
 import './App.css';
+import CupomGerenciador from './pages/coupom/CoupomGerenciador';
 
 const App = () =>
 {   
@@ -25,6 +26,8 @@ const App = () =>
                 <Route path='/login' element={<Login />} />
 
                 <Route path='/users' element={<Usuarios />} /> 
+
+                <Route path='/coupon' element={<CupomGerenciador />} />
 
             </Routes>
         </UserProvider>

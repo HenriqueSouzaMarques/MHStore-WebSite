@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import couponRouter from './routes/couponRoutes.js';
 
 const app = express();
 app.use(bodyParser.json());
@@ -38,6 +39,7 @@ mongoose
 
 app.use('/products', productRouter);
 app.use('/users', userRouter);
+app.use('/coupon', couponRouter);
 
 // Start the server
 app.listen(PORT, () => 
