@@ -26,15 +26,15 @@ const loadImage = async (imageUrl, fallbackImageUrl) =>
     }
 };
 
-const ProdutoCarrinho = ( { cartProduct } ) =>
+const ProdutoCarrinho = ( { cartProduct, index } ) =>
 {
     const { userData, updateUserData, fetchProduto, updateUser } = useContext(UserContext);
 
     const fetchProdutoMemoized = memoizeOne(fetchProduto);
 
+    const [ produto, setProduto ] = useState(null);
     const [ tamanho, setTamanho ] = useState(cartProduct.tamanho);
     const [imagem, setImagem] = useState(null);
-    const [produto, setProduto] = useState(null);
     const [marca, setMarca] = useState('');
     const [nome, setNome] = useState('');
     const [preco, setPreco] = useState(0);
@@ -55,6 +55,8 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
   
             setImagem(loadedImage || loadedFallbackImage);
             setProduto(product);
+            setTamanho(cartProduct.tamanho);
+            setQuantidade(cartProduct.quantidade);
             setMarca(product.marca);
             setNome(product.nome);
             setPreco(product.preco);
@@ -66,7 +68,7 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
             }
         };
         fetchData();
-    }, []);
+    }, [cartProduct.id, cartProduct.tamanho]);
 
     const handleIncreaseQuantity = () =>
     {
@@ -74,9 +76,6 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
         {
             const novoTotal = quantidade + 1;
 
-            const novoProduto = {...produto, quantidade: novoTotal};
-
-            setProduto(novoProduto);
             setQuantidade(novoTotal);
 
             const novoCarrinho = (userData.cartProducts).map((product) =>
@@ -109,9 +108,6 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
         {
             const novoTotal = quantidade - 1;
 
-            const novoProduto = {...produto, quantidade: novoTotal};
-
-            setProduto(novoProduto);
             setQuantidade(novoTotal);
 
             const novoCarrinho = (userData.cartProducts).map((product) =>
@@ -137,15 +133,23 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
         }  
     }
 
-    const handleDelete = () =>
+    const handleDelete = async ( index ) =>
     {
-        let novoCarrinho = (userData.cartProducts).filter((product) => product.id !== produto._id);
+        const novoCarrinho = [...userData.cartProducts]; // Create a copy of the cartProducts array
 
-        const novosDados = {...userData, cartProducts: novoCarrinho, totalProducts: (userData.totalProducts - quantidade)};
+        novoCarrinho.splice(index, 1);
+
+        const novosDados =
+        {
+            ...userData, 
+            cartProducts: novoCarrinho, 
+            purchaseAmount: ((userData.totalProducts - quantidade) * produto.preco),
+            totalProducts: (userData.totalProducts - quantidade)
+        };
 
         updateUserData(novosDados);
 
-        updateUser(novosDados);
+        await updateUser(novosDados);
     }
 
     
@@ -154,7 +158,7 @@ const ProdutoCarrinho = ( { cartProduct } ) =>
         <div className="product-container">                
                 
             <div className='product-info-container'>
-                <IconButton onClick={handleDelete}>
+                <IconButton onClick={() => handleDelete(index)}>
                     <DeleteOutlineIcon fontSize='large'/>
                 </IconButton>
 

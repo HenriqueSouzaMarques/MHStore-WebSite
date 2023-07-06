@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Carrinho = () =>
 {
-    const { userData, updateUserData, fetchProduto, updateProduct, updateUser } = useContext(UserContext);
+    const { userData, updateUserData, fetchProduto, fetchUsers, updateProduct, updateUser } = useContext(UserContext);
 
     const [isBlurred, setIsBlurred] = useState(false);
 
@@ -20,15 +20,13 @@ const Carrinho = () =>
     {
         setIsBlurred(true);
     }
-
-    const navigate = useNavigate();
-
+    
     const updateStock = async () =>
     {
         for (const product of userData.cartProducts)
         {            
             const produto = await fetchProduto(product.id);
-                  
+            
             const updatedProduct = { ...produto }; // Assuming `produto` is the retrieved product
             if (updatedProduct.estoque - product.quantidade > 0)
             {
@@ -38,11 +36,71 @@ const Carrinho = () =>
             {
                 updatedProduct.estoque = 0;
             }
-      
+            
             await updateProduct(updatedProduct);
         }
     };
 
+    const updateUsersCarts = async () =>
+    {
+        const users = await fetchUsers();
+
+        const usersPromises = users.map( async (user) =>
+        {
+            let novoCarrinho = (user.cartProducts);
+            let novoTotal = (user.purchaseAmount);
+            let novaQuantidade = (user.totalProducts);
+
+            for(const produtoDesejado of user.cartProducts)
+            {
+                if(user._id === userData._id) break;
+
+                for(const produtoComprado of userData.cartProducts)
+                {
+                    if(produtoComprado.id !== produtoDesejado.id) continue;
+
+                    const produto = await fetchProduto(produtoComprado.id);
+
+                    if(produto.estoque === 0)
+                    {
+                        novaQuantidade -= produtoDesejado.quantidade;
+                        novoTotal -= (produtoDesejado.quantidade * produto.preco);
+
+                        novoCarrinho = novoCarrinho.filter((p) => p.id !== produto._id);
+                    }
+
+                    else if (produtoDesejado.quantidade > produto.estoque)
+                    {
+                        const quantidadeResidual = (produtoDesejado.quantidade - produto.estoque);
+
+                        novaQuantidade -= quantidadeResidual;
+                        novoTotal -= (quantidadeResidual * produto.preco);
+
+                        novoCarrinho = novoCarrinho.map((p) =>
+                        {
+                            if(p.id === produtoDesejado.id)
+                            {
+                                return {...p, quantidade: produto.estoque}
+                            }
+
+                            return p;
+                        })
+                    }
+                }
+            }
+
+            await updateUser(
+                {
+                    ...user, 
+                    purchaseAmount: novoTotal,
+                    totalProducts: novaQuantidade > 0,
+                    cartProducts: novoCarrinho
+                });
+        })
+
+        await Promise.all(usersPromises);
+    }
+    
     const updateUsuario = async ( totalPurchase, creditCard ) =>
     {
         const compra = {};
@@ -52,34 +110,32 @@ const Carrinho = () =>
 
         const historico = userData.purchaseHistory;
         historico.push(compra)
-
+        
         let newData = {...userData, cartProducts: [], purchaseHistory: historico};
         newData = {...newData, totalProducts: 0};
         newData = {...newData, purchaseAmount: 0};
-
+        
         await updateUser(newData);
         updateUserData(newData);
     }
-
-
-    const finalizePurchase = ( buy, totalPurchase, creditCard ) =>
+    
+    
+    const navigate = useNavigate();
+    const finalizePurchase = async ( buy, totalPurchase, creditCard ) =>
     {
         if(buy)
         {
+            await Promise.all( [ updateStock() , updateUsuario(totalPurchase, creditCard) ] );
+
             alert("Purchase completed successfully!");
-
-            updateStock();
-
-            updateUsuario(totalPurchase, creditCard);
-            
             navigate('/');
-            
+
+            await updateUsersCarts()
         }
         else
         {
             setIsBlurred(false);
         }
-
     }
 
 
@@ -103,6 +159,7 @@ const Carrinho = () =>
                                 (
                                     <ProdutoCarrinho 
                                         cartProduct={produto}
+                                        index={index}
                                         key={index}
                                     />
                                 ))

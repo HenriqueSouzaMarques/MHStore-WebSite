@@ -108,7 +108,7 @@ router.put('/:productId/:size/:qtd', async (req, res) =>
     let quantity = user.totalProducts;
     let purchase = user.purchaseAmount;
     
-    const existingProductIndex = (user.cartProducts).findIndex((produto) => produto.id === productId && produto.tamanho === size);
+    const existingProductIndex = (user.cartProducts).findIndex((produto) => (produto.id === productId) && (produto.tamanho === size));
 
     const response = await axios.get(`http://localhost:8000/products/${productId}`);
     const product = await response.data;
