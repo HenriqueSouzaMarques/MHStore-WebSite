@@ -12,7 +12,7 @@ import AdicionarCarrinho from './AdicionarCarrinho/AdicionarCarrinho';
 import EditarProduto from './EditarProduto/EditarProduto';
 const Produto = ( { produto, updateProduto } ) =>
 {
-    const { userData, updateUserData, addCart, fetchUsers, updateUser } = useContext(UserContext);
+    const { userData, updateUserData, addCart, fetchProduto, fetchUsers, updateUser } = useContext(UserContext);
 
     const [ imagem, setImagem ] = useState(null);
     const [ adicionarCarrinho, setAdicionarCarrinho ] = useState(false);
@@ -40,7 +40,7 @@ const Produto = ( { produto, updateProduto } ) =>
 
     const removeProduct = async () =>
     {
-        await Promise.all[ updateRemoveUsers(produtoAtual), updateProduto({...produtoAtual, estoque: 0})];
+        await Promise.all[ updateRemoveUsers(produtoAtual), updateProduto({...produtoAtual, estoque: 0}) ];
     };
 
     const updateRemoveUsers = async ( produtoAtual ) =>
@@ -89,26 +89,27 @@ const Produto = ( { produto, updateProduto } ) =>
         updateUserData(newData);
     }
 
-    const closeAddPopUp = (size, quantidade, buy) =>
+    const closeAddPopUp = async (size, quantidade, buy) =>
     {
         setAdicionarCarrinho(false);
 
         if(buy)
         {
-            addProduct(produtoAtual, size, quantidade);
+            await addProduct(produtoAtual, size, quantidade);
         }
     }
 
     const closeEditPopUp = async ( edit, newProduct ) =>
     {
+        setEditarProduto(false);
+
         if(edit)
         {
             setProdutoAtual(newProduct);
 
-            await Promise.all([updateProduto(newProduct), updateUsers(newProduct)]);
+            await updateUsers(newProduct);
+            await updateProduto(newProduct);
         }
-
-        setEditarProduto(false);
     }
 
     const updateEditarCarrinho = ( user, newProduct ) =>
@@ -148,19 +149,28 @@ const Produto = ( { produto, updateProduto } ) =>
         {
             const [ newCart, novoTotal ] = updateEditarCarrinho(user, newProduct);
     
-            let novoPreco = 0;
+            let novoPurchaseAmount = 0;
 
-            newCart.forEach((produto) => 
+            for(const produto of newCart)
             {
-                novoPreco += (newProduct.preco * produto.quantidade);
-            })
+                const produtoCatalogo = await fetchProduto(produto.id);
+                
+                if(produtoCatalogo._id === newProduct._id)
+                {
+                    novoPurchaseAmount += ((newProduct.preco) * (produto.quantidade)) 
+                }
+                else
+                {
+                    novoPurchaseAmount += ((produtoCatalogo.preco) * (produto.quantidade)) 
+                }
+            }
     
             const newUserData = 
             {
                 ...user, 
                 cartProducts: newCart, 
                 totalProducts: novoTotal, 
-                purchaseAmount: novoPreco
+                purchaseAmount: novoPurchaseAmount
             };
     
             if(user._id === userData._id)

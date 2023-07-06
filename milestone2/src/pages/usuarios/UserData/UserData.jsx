@@ -84,6 +84,8 @@ const UserData = ({ user, setHistory }) =>
       fullAddress
     };
 
+    alert("User updated!");
+    
     if(updatedUser._id === userData._id)
     {
       updateUserData(updatedUser);
@@ -92,7 +94,6 @@ const UserData = ({ user, setHistory }) =>
     }
 
     await updateUser(updatedUser);
-
   };
 
   const handleOpenPopUp = () =>

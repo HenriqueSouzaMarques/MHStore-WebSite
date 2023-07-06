@@ -40,68 +40,8 @@ const Carrinho = () =>
             await updateProduct(updatedProduct);
         }
     };
-
-    const updateUsersCarts = async () =>
-    {
-        const users = await fetchUsers();
-
-        const usersPromises = users.map( async (user) =>
-        {
-            let novoCarrinho = (user.cartProducts);
-            let novoTotal = (user.purchaseAmount);
-            let novaQuantidade = (user.totalProducts);
-
-            for(const produtoDesejado of user.cartProducts)
-            {
-                if(user._id === userData._id) break;
-
-                for(const produtoComprado of userData.cartProducts)
-                {
-                    if(produtoComprado.id !== produtoDesejado.id) continue;
-
-                    const produto = await fetchProduto(produtoComprado.id);
-
-                    if(produto.estoque === 0)
-                    {
-                        novaQuantidade -= produtoDesejado.quantidade;
-                        novoTotal -= (produtoDesejado.quantidade * produto.preco);
-
-                        novoCarrinho = novoCarrinho.filter((p) => p.id !== produto._id);
-                    }
-
-                    else if (produtoDesejado.quantidade > produto.estoque)
-                    {
-                        const quantidadeResidual = (produtoDesejado.quantidade - produto.estoque);
-
-                        novaQuantidade -= quantidadeResidual;
-                        novoTotal -= (quantidadeResidual * produto.preco);
-
-                        novoCarrinho = novoCarrinho.map((p) =>
-                        {
-                            if(p.id === produtoDesejado.id)
-                            {
-                                return {...p, quantidade: produto.estoque}
-                            }
-
-                            return p;
-                        })
-                    }
-                }
-            }
-
-            await updateUser(
-                {
-                    ...user, 
-                    purchaseAmount: novoTotal,
-                    totalProducts: novaQuantidade > 0,
-                    cartProducts: novoCarrinho
-                });
-        })
-
-        await Promise.all(usersPromises);
-    }
     
-    const updateUsuario = async ( totalPurchase, creditCard ) =>
+    const updateUsuarios = async ( totalPurchase, creditCard ) =>
     {
         const compra = {};
         compra["produtos"] = userData.cartProducts;
@@ -111,26 +51,39 @@ const Carrinho = () =>
         const historico = userData.purchaseHistory;
         historico.push(compra)
         
-        let newData = {...userData, cartProducts: [], purchaseHistory: historico};
-        newData = {...newData, totalProducts: 0};
-        newData = {...newData, purchaseAmount: 0};
+        const users = await fetchUsers();
+        const usersPromises = users.map(async (user) =>
+        {
+            let newData =
+            {
+                ...user, 
+                cartProducts: [], 
+                totalProducts: 0,
+                purchaseAmount: 0,
+            };
+
+            if(user._id === userData._id)
+            {
+                newData = { ...newData, purchaseHistory: historico };
+
+                updateUserData(newData);
+            }
+            
+            await updateUser(newData);
+        })
         
-        await updateUser(newData);
-        updateUserData(newData);
+        Promise.all(usersPromises);
     }
-    
     
     const navigate = useNavigate();
     const finalizePurchase = async ( buy, totalPurchase, creditCard ) =>
     {
         if(buy)
         {
-            await Promise.all( [ updateStock() , updateUsuario(totalPurchase, creditCard) ] );
-
             alert("Purchase completed successfully!");
             navigate('/');
 
-            await updateUsersCarts()
+            await Promise.all( [ updateStock() , updateUsuarios(totalPurchase, creditCard) ] );
         }
         else
         {
