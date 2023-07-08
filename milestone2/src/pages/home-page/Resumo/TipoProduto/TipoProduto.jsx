@@ -24,24 +24,9 @@ const TipoProduto = ( {tipo} ) =>
         }
     }
 
-    const link = (nome) =>
-    {
-        switch (nome)
-        {
-            case "T-Shirts": return '/products#t-shirt';
-        
-            case "Sneakers"   : return '/products#sneakers';
-
-            case "Shorts"  : return '/products#shorts';
-
-            case "Pants"   : return '/products#pants'; 
-        }
-    }
-
-
     return (
         
-        <HashLink to={link(tipo.nome)} className="tipo-produto-container">
+        <HashLink to={'/products'} className="tipo-produto-container">
             <h3> {tipo.nome} </h3>
 
             <img src={imagem(tipo.nome)} alt={tipo.nome} />
