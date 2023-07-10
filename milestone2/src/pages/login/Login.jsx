@@ -94,10 +94,8 @@ const Login = () =>
 
         <div className="login-container">
 
-            <div className="logo-container">
-                <Logo size={"600px"} />
-            </div>
-
+            <Logo size={"600px"} />
+            
             <div className="form-container">
 
                 {
