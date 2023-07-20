@@ -1,0 +1,30 @@
+.menu-container
+{
+    margin-left: auto;
+}
+
+.user-info
+{
+    transform: translateY(-30px);
+    
+    float:right;
+
+    padding: 10px;
+    margin-left: 10px;
+
+    border: 2px solid #444;
+    border-radius: 5px;
+}
+
+.total-products
+{
+    font-size: 15px;
+    color: red;
+}
+
+li
+{
+    display: inline;
+    list-style-type: none;
+    margin-right: 20px;
+}
