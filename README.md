@@ -14,7 +14,7 @@ O sistema tem 2 tipos de usuários: Clientes e Administradores.
 
 1. Os Administradores são responsáveis pelo registro/gerenciamento de administradores, clientes e produtos/serviços fornecidos. A aplicação já vem com uma conta admin padrão (admin@admin.com 1234).
 2. Os clientes são usuários que acessam o sistema para comprar produtos/serviços.
-3. A loja vende produtos streatwear.
+3. A loja vende produtos streetwear.
 4. Venda de produtos: os produtos são selecionados, a quantidade escolhida e são incluídos em um carrinho. Os produtos são comprados usando um número de cartão de crédito (qualquer número é aceito pelo sistema). A quantidade de produtos vendidos é subtraída ao montante de estoque e adicionada ao montante dos vendidos.
 8. Gestão de Produtos/Serviços: Os administradores podem criar/atualizar/ler/excluir (crud) novos produtos. Por exemplo, eles podem alterar a quantidade em estoque.
 9. Para complementar os requisitos propostos pela disciplina, nosso projeto implementará cupons de desconto: assim, pretendemos que o servidor gere certa quantia de cupons de desconto (ID's) de maneira que, caso o usuário utilize um desses ID's gerados, o valor final do pagamento será decrescido por certa quantidade.
