@@ -1,0 +1,54 @@
+.produto-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 350px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+  
+.produto-container img
+{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.produto-container .nome
+{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.produto-container .marca
+{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.produto-container .estoque
+{
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.produto-container .preco
+{
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.botoes
+{
+    display: flex;
+}

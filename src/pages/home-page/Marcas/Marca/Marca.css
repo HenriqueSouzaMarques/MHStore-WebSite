@@ -1,0 +1,16 @@
+.coluna-imagem > img
+{
+    width: 200px;
+    filter: invert(20%);
+}
+
+.coluna-texto > p
+{
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    padding: 20px;
+
+    text-align: justify;
+    margin: 0 0 10px;
+}
