@@ -80,7 +80,7 @@ const ProdutoCarrinho = ( { cartProduct, index } ) =>
 
             const novoCarrinho = (userData.cartProducts).map((product) =>
             {
-                if(product.id === produto._id)
+                if(product.id === produto._id && product.size === tamanho)
                 {
                     return { id: produto._id, quantidade: novoTotal, tamanho: tamanho};
                 }
@@ -112,7 +112,7 @@ const ProdutoCarrinho = ( { cartProduct, index } ) =>
 
             const novoCarrinho = (userData.cartProducts).map((product) =>
             {
-                if(product.id === produto._id)
+                if(product.id === produto._id && product.size === tamanho)
                 {
                     return { id: produto._id, quantidade: novoTotal, tamanho: tamanho};
                 }

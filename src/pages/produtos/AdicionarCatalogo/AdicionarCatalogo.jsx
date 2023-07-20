@@ -89,9 +89,10 @@ const AdicionarCatalogo = ( { catalogo, fetchCatalogo, setCatalogo, setAdicionar
                                     onChange={handleChange}
                                     row
                                 >
-                                    <FormControlLabel value="Vans" control={<Radio />} label="Vans" />
                                     <FormControlLabel value="Nike" control={<Radio />} label="Nike" />
                                     <FormControlLabel value="Adidas" control={<Radio />} label="Adidas" />
+                                    <FormControlLabel value="Vans" control={<Radio />} label="Vans" />
+                                    <FormControlLabel value="High" control={<Radio />} label="High" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>

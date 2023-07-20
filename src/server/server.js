@@ -37,9 +37,9 @@ mongoose
         console.error('Error connecting to MongoDB:', error.message);
     });
 
-app.use('/products', productRouter);
-app.use('/users', userRouter);
-app.use('/coupon', couponRouter);
+app.use('/', productRouter);
+app.use('/', userRouter);
+app.use('/', couponRouter);
 
 // Start the server
 app.listen(PORT, () => 
