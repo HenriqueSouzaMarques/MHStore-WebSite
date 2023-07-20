@@ -1,6 +1,6 @@
-# Relatório do Projeto
+# MHStore WebSite
 
-### Integrantes
+### Colaboradores
 
 |        Nome               |    NUSP   |
 |:-------------------------:|:---------:|
@@ -20,10 +20,15 @@ O sistema tem 2 tipos de usuários: Clientes e Administradores.
 9. Para complementar os requisitos propostos pela disciplina, nosso projeto implementará cupons de desconto: assim, pretendemos que o servidor gere certa quantia de cupons de desconto (ID's) de maneira que, caso o usuário utilize um desses ID's gerados, o valor final do pagamento será decrescido por certa quantidade.
 
 ### Como rodar?
-Para rodar a aplicação, usar os seguintes comandos:
+Para rodar a aplicação:
 
-`npm install`
-
-`npm start`
-
+1. Clone o repositório:
+   `git clone https://github.com/HenriqueSouzaMarques/MHStore-WebSite.git`
+2. Mova-se para o diretório do projeto:
+   `cd MHStore-WebSite`
+3. Instale as dependências com node.js:
+   `npm install`
+4. Rode a aplicação:
+   `npm start`
+   
 Após tal procedimento, uma aba do browser de preferência deve ser aberta rodando a aplicação.
